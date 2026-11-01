@@ -1,0 +1,2472 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maidy Tri Wardani — Portfolio</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Icons / Animation / Lightbox -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
+
+   <script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                fontFamily: {
+                    sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    mono: ['DM Mono', 'monospace']
+                },
+                colors: {
+                    ink: '#EDEEF2',
+                    muted: '#9AA1AF',
+                    gold: '#D6A75C',
+                    goldlight: '#E8C589',
+                    night: '#0B0D12',
+                    panel: '#12141B'
+                }
+            }
+        }
+    }
+</script>
+
+<style>
+    :root {
+        --night: #0B0D12;
+        --panel: #12141B;
+        --panel-2: #171A22;
+        --line: rgba(255,255,255,.08);
+        --gold: #D6A75C;
+        --gold-soft: #E8C589;
+        --ink: #EDEEF2;
+        --muted: #9AA1AF;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--night);
+        overflow-x: hidden;
+    }
+
+    /* Background texture */
+    .page-bg {
+        position: fixed;
+        inset: 0;
+        z-index: -10;
+        pointer-events: none;
+        overflow: hidden;
+        background:
+            radial-gradient(circle at 12% 8%, rgba(214,167,92,.10), transparent 30%),
+            radial-gradient(circle at 90% 15%, rgba(214,167,92,.07), transparent 32%),
+            radial-gradient(circle at 80% 85%, rgba(214,167,92,.06), transparent 28%),
+            var(--night);
+    }
+
+    .ring-deco {
+        position: absolute;
+        border-radius: 50%;
+        border: 1px solid rgba(214,167,92,.14);
+    }
+
+    .grain {
+        position: fixed;
+        inset: 0;
+        z-index: -5;
+        pointer-events: none;
+        opacity: .05;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+    }
+
+    .glass {
+        background: rgba(18,20,27,.82);
+        border: 1px solid var(--line);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        box-shadow: 0 20px 60px rgba(0,0,0,.35);
+    }
+
+    .glass-panel {
+        background: var(--panel);
+        border: 1px solid var(--line);
+    }
+
+    /* Perbaikan Responsive Container Utama */
+    .section-wrap {
+        width: min(1180px, calc(100% - 32px));
+        margin: auto;
+    }
+
+    .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 13px;
+        border-radius: 999px;
+        background: rgba(214,167,92,.08);
+        border: 1px solid rgba(214,167,92,.28);
+        font-size: 10.5px;
+        font-weight: 700;
+        letter-spacing: .1em;
+        color: var(--gold-soft);
+    }
+
+    .eyebrow-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--gold);
+        box-shadow: 0 0 0 4px rgba(214,167,92,.18);
+    }
+
+    .display-title {
+        font-weight: 800;
+        letter-spacing: -.04em;
+        line-height: .98;
+    }
+
+    .gold-text { color: var(--gold); }
+
+    .soft-card {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        transition: .4s cubic-bezier(.2,.8,.2,1);
+    }
+
+    .soft-card:hover {
+        transform: translateY(-6px);
+        border-color: rgba(214,167,92,.35);
+        box-shadow: 0 24px 50px rgba(0,0,0,.4);
+    }
+
+    .project-card { transition: .45s cubic-bezier(.2,.8,.2,1); }
+
+    .project-image {
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(135deg,#1a1d26,#141620);
+    }
+
+    .project-image::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0,0,0,.75), transparent 60%);
+        opacity: .5;
+        transition: .4s;
+        pointer-events: none;
+    }
+
+    .project-card:hover .project-image::after { opacity: .85; }
+    .project-card img { transition: transform .65s cubic-bezier(.2,.8,.2,1); filter: saturate(.9); }
+    .project-card:hover img { transform: scale(1.06); }
+
+    .timeline-line {
+        position: absolute;
+        left: 13px;
+        top: 20px;
+        bottom: 0;
+        width: 1px;
+        background: linear-gradient(var(--gold), rgba(214,167,92,.15), transparent);
+    }
+
+    .timeline-dot {
+        position: relative;
+        z-index: 2;
+        width: 27px;
+        height: 27px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: var(--panel-2);
+        border: 1px solid rgba(214,167,92,.35);
+        color: var(--gold);
+    }
+
+    .skill-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 7px 11px;
+        border-radius: 10px;
+        background: rgba(255,255,255,.04);
+        border: 1px solid var(--line);
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--muted);
+        transition: .25s;
+    }
+
+    .skill-pill:hover { border-color: rgba(214,167,92,.4); color: var(--ink); }
+
+    .filter-btn {
+        transition: .25s;
+        color: var(--muted);
+        background: rgba(255,255,255,.03);
+        border: 1px solid var(--line);
+    }
+
+    .filter-btn.active {
+        color: #0B0D12;
+        background: var(--gold);
+        border-color: var(--gold);
+    }
+
+    .nav-link { position: relative; color: var(--muted); }
+    .nav-link:hover { color: var(--ink); }
+    .nav-link::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -7px;
+        width: 0;
+        height: 1.5px;
+        background: var(--gold);
+        transition: width .25s;
+    }
+    .nav-link:hover::after { width: 100%; }
+
+    .marquee { overflow: hidden; white-space: nowrap; }
+    .marquee-track {
+        display: inline-flex;
+        min-width: max-content;
+        animation: marquee 24s linear infinite;
+    }
+    @keyframes marquee { to { transform: translateX(-50%); } }
+
+    .number { font-family: 'DM Mono', monospace; letter-spacing: -.03em; }
+
+    .contact-orb { position: absolute; border-radius: 50%; filter: blur(50px); opacity: .18; }
+
+    .tool-logo { width: 42px; height: 42px; object-fit: contain; filter: grayscale(.15); }
+    .tool-card:hover .tool-logo { transform: translateY(-2px); }
+
+    /* =====================================
+       SERTIFIKAT PORTOFOLIO
+    ===================================== */
+    .cert-frame {
+        width: 100%;
+        height: 250px;
+        padding: 8px;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        background: #15161c;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .cert-frame img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center;
+        transition: transform 0.3s ease;
+    }
+
+    .soft-card:hover .cert-frame img {
+        transform: scale(1.02);
+    }
+
+    /* Sertifikat panjang (BNSP/MikroTik) */
+    .cert-frame.cert-tall {
+        height: 420px;
+        padding: 12px;
+        background: #15161c;
+    }
+
+    .cert-frame.cert-tall img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center;
+    }
+
+    .soft-card {
+        height: 100%;
+    }
+
+    .soft-card .p-5 {
+        min-height: 68px;
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+    }
+
+    .soft-card .p-5 h3 {
+        margin: 0;
+        line-height: 1.6;
+    }
+
+    /* MEDIA QUERIES (HP & TABLET) */
+    @media (max-width: 767px) {
+        .section-wrap { width: min(100% - 24px, 1180px); }
+        .display-title { letter-spacing: -.03em; }
+    }
+
+    /* Tablet breakpoint */
+    @media (max-width: 768px) {
+        .cert-frame {
+            height: 220px;
+        }
+        .cert-frame.cert-tall {
+            height: 360px;
+        }
+    }
+
+    /* Smartphone breakpoint */
+    @media (max-width: 480px) {
+        .cert-frame {
+            height: 200px;
+        }
+        .cert-frame.cert-tall {
+            height: 320px;
+        }
+    }
+</style>
+
+<body class="font-sans antialiased">
+    <div class="page-bg">
+        <div class="ring-deco" style="width:520px;height:520px;top:-120px;right:-160px;"></div>
+        <div class="ring-deco" style="width:340px;height:340px;bottom:8%;left:-140px;"></div>
+    </div>
+    <div class="grain"></div>
+
+    <!-- NAVBAR — fungsi mobile menu tetap sama -->
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 px-3 sm:px-5 pt-3">
+        <div class="section-wrap">
+            <div class="glass rounded-2xl px-4 sm:px-6 h-[68px] flex items-center justify-between">
+                <a href="#hero" class="flex items-center gap-3">
+                    <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#D6A75C] to-[#8a6a2e] text-night grid place-items-center font-extrabold shadow-lg shadow-black/40">MT</span>
+                    <div class="leading-none">
+                        <div class="font-extrabold text-sm sm:text-base text-ink">Maidy Tri W.</div>
+                        <div class="text-[9px] uppercase tracking-[.2em] text-muted mt-1">Software Developer &amp; Data Analyst</div>
+                    </div>
+                </a>
+
+                <nav class="hidden md:flex items-center gap-7 text-[11px] font-bold uppercase tracking-wider">
+                    <a class="nav-link" href="#tentang">Tentang</a>
+                    <a class="nav-link" href="#pengalaman">Pengalaman</a>
+                    <a class="nav-link" href="#proyek">Proyek</a>
+                    <a class="nav-link" href="#keahlian">Keahlian</a>
+                    <a class="nav-link" href="#sertifikasi">Sertifikasi</a>
+                    <a class="nav-link" href="#publikasi">Publikasi</a>
+                </nav>
+
+                <a href="#kontak" class="hidden sm:inline-flex items-center gap-2 rounded-xl bg-gold text-night px-4 py-2.5 text-[11px] font-bold hover:-translate-y-0.5 transition shadow-lg shadow-black/30">
+                    Hubungi Saya <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                </a>
+
+                <button id="menu-btn" class="md:hidden w-10 h-10 rounded-xl bg-white/5 border border-white/10 text-ink">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+
+            <div id="mobile-menu" class="hidden md:hidden glass rounded-2xl mt-2 p-4 space-y-1">
+                <a href="#tentang" class="block px-4 py-3 rounded-xl text-sm font-bold text-ink hover:bg-white/5">Tentang</a>
+                <a href="#pengalaman" class="block px-4 py-3 rounded-xl text-sm font-bold text-ink hover:bg-white/5">Pengalaman</a>
+                <a href="#proyek" class="block px-4 py-3 rounded-xl text-sm font-bold text-ink hover:bg-white/5">Proyek &amp; Galeri</a>
+                <a href="#keahlian" class="block px-4 py-3 rounded-xl text-sm font-bold text-ink hover:bg-white/5">Keahlian</a>
+                <a href="#sertifikasi" class="block px-4 py-3 rounded-xl text-sm font-bold text-ink hover:bg-white/5">Sertifikasi</a>
+                <a href="#publikasi" class="block px-4 py-3 rounded-xl text-sm font-bold text-ink hover:bg-white/5">Publikasi</a>
+                <a href="#kontak" class="block text-center px-4 py-3 rounded-xl bg-gold text-night text-sm font-bold">Hubungi Saya</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- HERO SECTION REDESIGN -->
+<section id="hero" class="pt-32 pb-20 relative overflow-hidden">
+    <div class="section-wrap relative">
+        
+        <!-- Badge Status & Portfolio Year Badge -->
+        <div class="flex items-center justify-between mb-8" data-aos="fade-down" data-aos-duration="800">
+            <div class="eyebrow">
+                <span class="eyebrow-dot"></span> Open for Opportunities
+            </div>
+            
+            <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full border border-gold/20 bg-gold/5 backdrop-blur-sm">
+                <span class="w-2 h-2 rounded-full bg-gold animate-pulse"></span>
+                <span class="text-[11px] font-bold tracking-wider gold-text uppercase">Portfolio 2026</span>
+            </div>
+        </div>
+
+        <!-- Layout Utama: Grid 2 Kolom untuk Hero Text & Skills Summary -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            
+            <!-- Kolom Kiri: Nama & Deskripsi (7 Kolom) -->
+            <div class="lg:col-span-7" data-aos="fade-right" data-aos-duration="900">
+                <h1 class="display-title text-5xl sm:text-7xl lg:text-[6.5rem] leading-[0.95] text-ink font-extrabold tracking-tight">
+                    Maidy Tri<br>
+                    <span class="gold-text">Wardani</span>
+                </h1>
+                
+                <p class="mt-5 text-sm sm:text-base font-bold uppercase tracking-[0.2em] text-gold/90">
+                    Software Developer &amp; Data Analyst
+                </p>
+
+                <!-- Value Proposition untuk HRD -->
+                <p class="mt-4 text-muted text-sm sm:text-base max-w-xl leading-relaxed">
+                    Menghubungkan analisis data presisi tinggi dengan rekayasa perangkat lunak yang andal untuk menghasilkan solusi bisnis yang terukur.
+                </p>
+
+                <!-- Tombol Action Utama (Sangat Disukai HRD) -->
+                <div class="mt-8 flex flex-wrap gap-4 items-center">
+                    <a href="#kontak" class="px-6 py-3 rounded-xl bg-gold text-night font-bold text-sm hover:brightness-110 transition-all flex items-center gap-2 shadow-lg shadow-gold/20">
+                        <span>Hubungi Saya</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </a>
+                    <a href="#proyek" class="px-6 py-3 rounded-xl border border-gold/30 text-ink font-bold text-sm hover:bg-gold/10 transition-all">
+                        Lihat Proyek
+                    </a>
+                </div>
+            </div>
+
+            <!-- Kolom Kanan: Keahlian Utama Terstruktur (5 Kolom) -->
+            <div class="lg:col-span-5 flex flex-col gap-6" data-aos="fade-left" data-aos-delay="200" data-aos-duration="900">
+                
+                <!-- Kategori 1: Data Analytics & AI -->
+                <div class="soft-card p-5 rounded-2xl border border-white/5 bg-night/40 backdrop-blur-md">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-bold uppercase tracking-wider text-muted">Data & AI Engineering</span>
+                        <span class="text-[10px] px-2 py-0.5 rounded bg-gold/10 text-gold font-semibold">Analytics</span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-3">
+                        <!-- Python -->
+                        <div class="flex flex-col items-center justify-center p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all text-center group">
+                            <img class="w-7 h-7 mb-1 group-hover:scale-110 transition-transform" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="Python">
+                            <span class="text-xs font-bold text-ink">Python</span>
+                            <span class="text-[9px] text-muted">Core Lang</span>
+                        </div>
+                        <!-- Power BI -->
+                        <div class="flex flex-col items-center justify-center p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all text-center group">
+                            <img class="w-7 h-7 mb-1 group-hover:scale-110 transition-transform" src="logo/powerbi.jpg" alt="Power BI">
+                            <span class="text-xs font-bold text-ink">Power BI</span>
+                            <span class="text-[9px] text-muted">Viz & BI</span>
+                        </div>
+                        <!-- YOLOv11 -->
+                        <div class="flex flex-col items-center justify-center p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all text-center group">
+                            <div class="w-7 h-7 mb-1 rounded-md bg-gold text-night grid place-items-center font-black text-[9px] group-hover:scale-110 transition-transform">YOLO</div>
+                            <span class="text-xs font-bold text-ink">YOLOv11</span>
+                            <span class="text-[9px] text-muted">Vision AI</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kategori 2: Software & Web Development -->
+                <div class="soft-card p-5 rounded-2xl border border-white/5 bg-night/40 backdrop-blur-md">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-bold uppercase tracking-wider text-muted">Software & Backend</span>
+                        <span class="text-[10px] px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 font-semibold">Development</span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-3">
+                        <!-- FastAPI -->
+                        <div class="flex flex-col items-center justify-center p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all text-center group">
+                            <img class="w-7 h-7 mb-1 group-hover:scale-110 transition-transform" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg" alt="FastAPI">
+                            <span class="text-xs font-bold text-ink">FastAPI</span>
+                            <span class="text-[9px] text-muted">Async API</span>
+                        </div>
+                        <!-- Laravel -->
+                        <div class="flex flex-col items-center justify-center p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all text-center group">
+                            <img class="w-7 h-7 mb-1 group-hover:scale-110 transition-transform" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg" alt="Laravel">
+                            <span class="text-xs font-bold text-ink">Laravel</span>
+                            <span class="text-[9px] text-muted">Fullstack</span>
+                        </div>
+                        <!-- MySQL -->
+                        <div class="flex flex-col items-center justify-center p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all text-center group">
+                            <img class="w-7 h-7 mb-1 group-hover:scale-110 transition-transform" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" alt="MySQL">
+                            <span class="text-xs font-bold text-ink">MySQL</span>
+                            <span class="text-[9px] text-muted">Database</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+        <!-- ABOUT — Image Slider/Carousel & Deskripsi Diri -->
+<section id="tentang" class="py-20">
+    <div class="section-wrap">
+        <div class="soft-card rounded-[28px] overflow-hidden border border-white/10 bg-night/40 backdrop-blur-md" data-aos="fade-up">
+            <div class="grid md:grid-cols-[.85fr_1.15fr]">
+                
+                <!-- SISI KIRI: Slider Foto -->
+                <div class="relative min-h-[320px] md:min-h-full bg-gradient-to-br from-[#1a1d26] to-[#0f1117] group">
+                    
+                    <!-- Container Gambar -->
+                    <div id="profile-slider" class="relative w-full h-full min-h-[320px] overflow-hidden">
+                        <img id="slide-1" src="images/profil.jpg" alt="Maidy Profile 1" class="w-full h-full object-cover absolute inset-0 opacity-100 transition-opacity duration-500">
+                        <img id="slide-2" src="images/profil 2 (2).jpg" alt="Maidy Profile 2" class="w-full h-full object-cover absolute inset-0 opacity-0 transition-opacity duration-500">
+                        <img id="slide-3" src="images/profil 3 (1).jpg" alt="Maidy Profile 3" class="w-full h-full object-cover absolute inset-0 opacity-0 transition-opacity duration-500">
+                    </div>
+
+                    <!-- Tombol Navigasi Gambar (Kiri / Kanan) -->
+                    <div class="absolute inset-0 flex items-center justify-between p-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button type="button" onclick="prevSlide()" class="w-8 h-8 rounded-full bg-night/70 text-gold flex items-center justify-center border border-white/10 hover:bg-gold hover:text-night transition">
+                            <i class="fa-solid fa-chevron-left text-xs"></i>
+                        </button>
+                        <button type="button" onclick="nextSlide()" class="w-8 h-8 rounded-full bg-night/70 text-gold flex items-center justify-center border border-white/10 hover:bg-gold hover:text-night transition">
+                            <i class="fa-solid fa-chevron-right text-xs"></i>
+                        </button>
+                    </div>
+
+                    <!-- Indikator Titik Slider -->
+                    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/10">
+                        <span onclick="setSlide(0)" class="slide-dot w-2 h-2 rounded-full bg-gold cursor-pointer transition-all"></span>
+                        <span onclick="setSlide(1)" class="slide-dot w-2 h-2 rounded-full bg-white/40 cursor-pointer transition-all"></span>
+                        <span onclick="setSlide(2)" class="slide-dot w-2 h-2 rounded-full bg-white/40 cursor-pointer transition-all"></span>
+                    </div>
+                </div>
+
+                <!-- SISI KANAN: Deskripsi Diri -->
+                <div class="p-8 sm:p-10 flex flex-col justify-between">
+                    <div>
+                        <span class="display-title text-5xl sm:text-6xl gold-text">Hi,</span>
+                        
+                        <p class="mt-5 text-sm sm:text-base leading-7 text-muted">
+                            Saya <b class="text-ink">Maidy Tri Wardani</b>, lulusan Sarjana (S1) Informatika dari Universitas Bina Sarana Informatika dengan IPK <b class="text-ink">3.86/4.00</b>. Saya memiliki minat dan spesialisasi mendalam pada pengembangan perangkat lunak, artificial intelligence (computer vision), dan analisis data.
+                        </p>
+                        
+                        <p class="mt-4 text-sm leading-7 text-muted">
+                            Memiliki pengalaman praktis dalam membangun sistem deteksi objek otomatis berbasis <b class="text-ink">YOLO &amp; OpenCV</b>, mengintegrasikannya ke layanan API performa tinggi menggunakan <b class="text-ink">FastAPI</b>, serta merancang arsitektur aplikasi web modern berbasis <b class="text-ink">Laravel &amp; Tailwind CSS</b>. Terbiasa bekerja secara mandiri maupun dalam tim lintas fungsi, berpikir analitis, serta berkomitmen menghadirkan solusi teknis yang efisien, terstruktur, dan berdampak nyata.
+                        </p>
+                    </div>
+
+                    <div class="mt-8 flex flex-wrap items-center justify-between gap-4 pt-6 border-t border-white/10">
+                        <div class="flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-gold"></span>
+                            <span class="w-1.5 h-1.5 rounded-full bg-gold"></span>
+                            <span class="w-1.5 h-1.5 rounded-full bg-gold"></span>
+                            <span class="ml-2 text-xs font-bold text-ink">Software Developer &amp; Data Analyst</span>
+                        </div>
+                        <a href="#proyek" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gold text-night text-xs font-bold hover:-translate-y-1 transition">
+                            Lihat Galeri Proyek <i class="fa-solid fa-arrow-down"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Script Sederhana untuk Slider Opsi 2 -->
+<script>
+    let currentSlide = 0;
+    const slides = [document.getElementById('slide-1'), document.getElementById('slide-2'), document.getElementById('slide-3')];
+    const dots = document.querySelectorAll('.slide-dot');
+
+    function updateSlide() {
+        slides.forEach((s, idx) => {
+            if (idx === currentSlide) {
+                s.classList.remove('opacity-0');
+                s.classList.add('opacity-100');
+                dots[idx].classList.remove('bg-white/40');
+                dots[idx].classList.add('bg-gold');
+            } else {
+                s.classList.remove('opacity-100');
+                s.classList.add('opacity-0');
+                dots[idx].classList.remove('bg-gold');
+                dots[idx].classList.add('bg-white/40');
+            }
+        });
+    }
+
+    function setSlide(index) {
+        currentSlide = index;
+        updateSlide();
+    }
+
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        updateSlide();
+    }
+
+    function prevSlide() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        updateSlide();
+    }
+</script>
+
+     <!-- GET IN TOUCH — Modern Contact Banner & Hub -->
+<section id="kontak" class="py-20 relative overflow-hidden">
+    <div class="section-wrap">
+        
+        <!-- Banner Utama (Hero-Style Call To Action) -->
+        <div class="soft-card rounded-[28px] p-8 sm:p-12 relative overflow-hidden border border-gold/20 bg-gradient-to-br from-[#1a1d26] via-night to-[#0f1117]" data-aos="fade-up">
+            
+            <!-- Glow Background Accent -->
+            <div class="absolute -top-24 -right-24 w-96 h-96 bg-gold/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="grid lg:grid-cols-12 gap-8 items-center relative z-10">
+                
+                <!-- Sisi Kiri: Heading & Status (7 Kolom) -->
+                <div class="lg:col-span-7">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-gold/30 bg-gold/10 text-gold text-[11px] font-bold uppercase tracking-wider mb-4">
+                        <span class="w-2 h-2 rounded-full bg-gold animate-pulse"></span>
+                        Available for Full-time & Project Roles
+                    </div>
+                    
+                    <h2 class="display-title text-4xl sm:text-5xl lg:text-6xl text-ink font-extrabold leading-tight">
+                        Mari Bekerja<br><span class="gold-text">Sama!</span>
+                    </h2>
+                    
+                    <p class="mt-4 text-sm sm:text-base text-muted max-w-lg leading-relaxed">
+                        Tertarik merekrut atau berdiskusi mengenai proyek AI, Data Analytics, maupun Software Development? Saya siap berkontribusi pada tim Anda.
+                    </p>
+                </div>
+
+                <!-- Sisi Kanan: Action Card & Quick Copy (5 Kolom) -->
+                <div class="lg:col-span-5 flex flex-col gap-3">
+                    
+                    <!-- Tombol Utama Kirim Email -->
+                    <a href="mailto:meydtriwardani@gmail.com" class="group flex items-center justify-between p-4 rounded-2xl bg-gold text-night font-bold hover:brightness-110 transition-all shadow-lg shadow-gold/20">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-night/10 flex items-center justify-center text-night">
+                                <i class="fa-regular fa-envelope text-lg"></i>
+                            </div>
+                            <div class="text-left">
+                                <div class="text-[10px] uppercase font-extrabold tracking-wider opacity-80">Kirim Email Langsung</div>
+                                <div class="text-xs sm:text-sm font-black break-all">meydtriwardani@gmail.com</div>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-paper-plane text-sm group-hover:translate-x-1 transition-transform pr-2"></i>
+                    </a>
+
+                    <!-- Info Box Alternatif (Pengganti WhatsApp) -->
+                    <div class="flex items-center justify-between p-4 rounded-2xl border border-white/10 bg-white/5">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-gold/10 text-gold flex items-center justify-center">
+                                <i class="fa-solid fa-briefcase text-sm"></i>
+                            </div>
+                            <div class="text-left">
+                                <div class="text-[10px] uppercase font-bold tracking-wider text-muted">Status Kolaborasi</div>
+                                <div class="text-xs sm:text-sm font-bold text-ink">Terbuka untuk Tawaran Kerja</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Separator & Grid Jejaring Sosial Profesional -->
+            <div class="mt-10 pt-8 border-t border-white/10 grid grid-cols-2 sm:grid-cols-3 gap-4">
+                
+                <!-- LinkedIn (Profesional) -->
+                <a href="https://www.linkedin.com/in/maidy-triwardani-4a519137b/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 p-3.5 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/5 hover:border-gold/30 transition-all group">
+                    <div class="w-9 h-9 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <i class="fa-brands fa-linkedin-in text-base"></i>
+                    </div>
+                    <div>
+                        <div class="text-[9px] uppercase font-bold text-muted">LinkedIn</div>
+                        <div class="text-xs font-bold text-ink group-hover:text-gold transition-colors">Maidy Tri Wardani</div>
+                    </div>
+                </a>
+
+                <!-- GitHub (Sangat Penting untuk Developer & Data Analyst) -->
+                <a href="https://github.com/maidy0520" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 p-3.5 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/5 hover:border-gold/30 transition-all group">
+                    <div class="w-9 h-9 rounded-lg bg-white/10 text-ink flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <i class="fa-brands fa-github text-base"></i>
+                    </div>
+                    <div>
+                        <div class="text-[9px] uppercase font-bold text-muted">GitHub</div>
+                        <div class="text-xs font-bold text-ink group-hover:text-gold transition-colors">Repository Proyek</div>
+                    </div>
+                </a>
+
+                <!-- Instagram (Personal Branding) -->
+                <a href="https://www.instagram.com/wardaniii._maidy?psln=ZnBtMmpvem5yczdp" target="_blank" rel="noopener noreferrer" class="col-span-2 sm:col-span-1 flex items-center gap-3 p-3.5 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/5 hover:border-gold/30 transition-all group">
+                    <div class="w-9 h-9 rounded-lg bg-pink-500/10 text-pink-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <i class="fa-brands fa-instagram text-base"></i>
+                    </div>
+                    <div>
+                        <div class="text-[9px] uppercase font-bold text-muted">Instagram</div>
+                        <div class="text-xs font-bold text-ink group-hover:text-gold transition-colors">@Wardaniii._maidy</div>
+                    </div>
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+     <!-- EXPERIENCE + EDUCATION (Layout 2 Kolom Berdampingan Kiri & Kanan) -->
+<section id="pengalaman" class="py-20 bg-white/[.02] border-y border-white/10">
+    <div class="section-wrap max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="grid lg:grid-cols-2 gap-8 items-start">
+            
+            <!-- ==================== KOLOM KIRI: EDUCATION & INTEREST ==================== -->
+            <div class="space-y-12" data-aos="fade-right">
+                
+                <!-- 1. Education Section -->
+                <div>
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="display-title text-3xl text-ink">Education</h2>
+                        <i class="fa-solid fa-chevron-down gold-text text-sm"></i>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- Kartu S1 Universitas (Lengkap dengan Slider Foto) -->
+                        <article class="soft-card rounded-2xl overflow-hidden border border-white/10 bg-night/40 backdrop-blur-md">
+                            
+                            <!-- SLIDER FOTO EDUCATION -->
+                            <div class="relative w-full bg-transparent group flex items-center justify-center overflow-hidden py-4 px-2">
+                                <div class="relative w-full flex items-center justify-center h-[200px] sm:h-[240px]">
+                                    <img id="edu-slide-1" src="education & Experiens/Kampus 1.jpg" alt="Dokumentasi UBSI 1" class="max-h-full max-w-full object-contain absolute inset-0 m-auto opacity-100 transition-opacity duration-500 rounded-lg">
+                                    <img id="edu-slide-2" src="education & Experiens/kampus 2.jpg" alt="Dokumentasi UBSI 2" class="max-h-full max-w-full object-contain absolute inset-0 m-auto opacity-0 transition-opacity duration-500 rounded-lg">
+                                    <img id="edu-slide-3" src="education & Experiens/kampus3.jpg" alt="Dokumentasi UBSI 3" class="max-h-full max-w-full object-contain absolute inset-0 m-auto opacity-0 transition-opacity duration-500 rounded-lg">
+                                </div>
+
+                                <!-- Navigasi Panah Geser -->
+                                <div class="absolute inset-0 flex items-center justify-between p-2 pointer-events-none group-hover:pointer-events-auto opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button type="button" onclick="prevEduSlide()" class="w-7 h-7 rounded-full bg-night/80 text-gold flex items-center justify-center border border-white/10 hover:bg-gold hover:text-night transition shadow-md">
+                                        <i class="fa-solid fa-chevron-left text-[10px]"></i>
+                                    </button>
+                                    <button type="button" onclick="nextEduSlide()" class="w-7 h-7 rounded-full bg-night/80 text-gold flex items-center justify-center border border-white/10 hover:bg-gold hover:text-night transition shadow-md">
+                                        <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                                    </button>
+                                </div>
+
+                                <!-- Indikator Titik -->
+                                <div class="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10 z-10">
+                                    <span onclick="setEduSlide(0)" class="edu-dot w-1.5 h-1.5 rounded-full bg-gold cursor-pointer transition-all"></span>
+                                    <span onclick="setEduSlide(1)" class="edu-dot w-1.5 h-1.5 rounded-full bg-white/40 cursor-pointer transition-all"></span>
+                                    <span onclick="setEduSlide(2)" class="edu-dot w-1.5 h-1.5 rounded-full bg-white/40 cursor-pointer transition-all"></span>
+                                </div>
+                            </div>
+
+                            <!-- DETAIL UNIVERSITAS -->
+                            <div class="p-6 space-y-2.5">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-[10px] font-bold gold-text px-3 py-1 rounded-full bg-gold/10 border border-gold/25 uppercase tracking-wider">2022 — AGUSTUS 2026</span>
+                                    <span class="text-xs font-bold text-emerald-400 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">IPK 3.86 / 4.00</span>
+                                </div>
+                                <h3 class="font-extrabold text-base sm:text-lg text-ink pt-1">Sarjana (S1) — Informatika</h3>
+                                <p class="text-xs sm:text-sm text-gold/90 font-medium leading-relaxed">Universitas Bina Sarana Informatika</p>
+                            </div>
+                        </article>
+
+                        <!-- Kartu SMAN -->
+                        <article class="soft-card rounded-2xl p-5 border border-white/5">
+                            <div class="flex items-center justify-between">
+                                <span class="text-[10px] font-bold text-muted px-2.5 py-1 rounded-full bg-white/5 border border-white/10">2019 — 2022</span>
+                                <i class="fa-solid fa-school text-muted text-sm"></i>
+                            </div>
+                            <h3 class="font-extrabold text-sm sm:text-base mt-3 text-ink">MIPA</h3>
+                            <p class="text-xs text-muted mt-1">SMAN 1 Cicalengka · Jawa Barat</p>
+                        </article>
+                    </div>
+                </div>
+
+                <!-- 2. Interest & Expertise Section -->
+                <div>
+                    <div class="flex items-center justify-between mb-5">
+                        <h2 class="display-title text-3xl text-ink">Interest &amp; Expertise</h2>
+                        <i class="fa-solid fa-chevron-down gold-text text-sm"></i>
+                    </div>
+                    <ul class="space-y-3">
+                        <li class="soft-card rounded-2xl px-5 py-4 flex items-center gap-3 text-xs sm:text-sm text-ink font-semibold">
+                            <span class="w-2 h-2 rounded-full bg-gold shrink-0"></span> AI &amp; Computer Vision (YOLO, OpenCV)
+                        </li>
+                        <li class="soft-card rounded-2xl px-5 py-4 flex items-center gap-3 text-xs sm:text-sm text-ink font-semibold">
+                            <span class="w-2 h-2 rounded-full bg-gold shrink-0"></span> Web Development (Laravel, FastAPI)
+                        </li>
+                        <li class="soft-card rounded-2xl px-5 py-4 flex items-center gap-3 text-xs sm:text-sm text-ink font-semibold">
+                            <span class="w-2 h-2 rounded-full bg-gold shrink-0"></span> Data Analysis &amp; Visualization
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- ==================== KOLOM KANAN: EXPERIENCE ==================== -->
+            <div data-aos="fade-left">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="display-title text-3xl text-ink">Experience</h2>
+                    <i class="fa-solid fa-chevron-down gold-text text-sm"></i>
+                </div>
+
+                <div class="soft-card rounded-[24px] p-7 sm:p-9 border border-white/10 bg-night/40 backdrop-blur-md">
+                    <div class="relative space-y-10">
+                        <div class="timeline-line"></div>
+
+                        <!-- EXPERIENCE 1: AI Intern -->
+                        <article class="relative flex gap-4">
+                            <div class="timeline-dot"><i class="fa-solid fa-microchip text-[10px]"></i></div>
+                            <div class="pb-4 flex-1">
+                                <span class="text-[10px] font-bold gold-text uppercase tracking-wider">AGUSTUS — OKTOBER 2025</span>
+                                <h3 class="font-extrabold text-base sm:text-lg mt-1 text-ink">AI Intern — Computer Vision &amp; Web Integration</h3>
+                                <p class="text-xs font-semibold text-gold/80 mt-0.5">PT Beeja Sejahtera Raharja • Jakarta</p>
+
+                                <!-- SLIDER FOTO EXPERIENCE 1 -->
+                                <div class="relative mt-3 w-full bg-transparent group flex items-center justify-center overflow-hidden py-2 px-1">
+                                    <div class="relative w-full flex items-center justify-center h-[180px] sm:h-[220px]">
+                                        <img id="exp1-slide-1" src="education & Experiens/magang1.jpg" alt="AI Intern Dok 1" class="max-h-full max-w-full object-contain absolute inset-0 m-auto opacity-100 transition-opacity duration-500 rounded-lg">
+                                        <img id="exp1-slide-2" src="education & Experiens/magang 2.jpg" alt="AI Intern Dok 2" class="max-h-full max-w-full object-contain absolute inset-0 m-auto opacity-0 transition-opacity duration-500 rounded-lg">
+                                        <img id="exp1-slide-3" src="education & Experiens/magang3.jpg" alt="AI Intern Dok 3" class="max-h-full max-w-full object-contain absolute inset-0 m-auto opacity-0 transition-opacity duration-500 rounded-lg">
+                                    </div>
+
+                                    <!-- Navigasi Panah Geser -->
+                                    <div class="absolute inset-0 flex items-center justify-between p-2 pointer-events-none group-hover:pointer-events-auto opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <button type="button" onclick="prevExp1Slide()" class="w-7 h-7 rounded-full bg-night/80 text-gold flex items-center justify-center border border-white/10 hover:bg-gold hover:text-night transition shadow-md">
+                                            <i class="fa-solid fa-chevron-left text-[10px]"></i>
+                                        </button>
+                                        <button type="button" onclick="nextExp1Slide()" class="w-7 h-7 rounded-full bg-night/80 text-gold flex items-center justify-center border border-white/10 hover:bg-gold hover:text-night transition shadow-md">
+                                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                                        </button>
+                                    </div>
+
+                                    <!-- Indikator Titik -->
+                                    <div class="absolute bottom-1.5 left-1/2 -translate-x-1/2 flex gap-1.5 px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 z-10">
+                                        <span onclick="setExp1Slide(0)" class="exp1-dot w-1.5 h-1.5 rounded-full bg-gold cursor-pointer transition-all"></span>
+                                        <span onclick="setExp1Slide(1)" class="exp1-dot w-1.5 h-1.5 rounded-full bg-white/40 cursor-pointer transition-all"></span>
+                                        <span onclick="setExp1Slide(2)" class="exp1-dot w-1.5 h-1.5 rounded-full bg-white/40 cursor-pointer transition-all"></span>
+                                    </div>
+                                </div>
+
+                                <ul class="mt-4 text-xs sm:text-sm text-muted leading-6 list-disc pl-4 space-y-1.5">
+                                    <li>Mengembangkan sistem deteksi produk fashion menggunakan YOLO dan dataset FashionPedia.</li>
+                                    <li>Mengonversi model AI menjadi API dengan <b class="text-ink">FastAPI</b> dan mengintegrasikannya ke <b class="text-ink">Laravel</b>.</li>
+                                    <li>Mengembangkan dashboard monitoring tren dan melakukan pengujian performa model.</li>
+                                </ul>
+                            </div>
+                        </article>
+
+                        <!-- EXPERIENCE 2: Pelatih / Tutor PKM -->
+                        <article class="relative flex gap-4">
+                            <div class="timeline-dot"><i class="fa-solid fa-users text-[10px]"></i></div>
+                            <div class="flex-1">
+                                <span class="text-[10px] font-bold text-muted uppercase tracking-wider">JUNI 2024</span>
+                                <h3 class="font-extrabold text-base sm:text-lg mt-1 text-ink">Pelatih / Tim Tutor — Google Workspace</h3>
+                                <p class="text-xs font-semibold text-gold/80 mt-0.5">Pengabdian Masyarakat UBSI • Cibubur</p>
+
+                                <!-- SLIDER FOTO EXPERIENCE 2 -->
+                                <div class="relative mt-3 w-full bg-transparent group flex items-center justify-center overflow-hidden py-2 px-1">
+                                    <div class="relative w-full flex items-center justify-center h-[180px] sm:h-[220px]">
+                                        <img id="exp2-slide-1" src="images/expe pkm.jpg" alt="Dokumentasi PKM 1" class="max-h-full max-w-full object-contain absolute inset-0 m-auto opacity-100 transition-opacity duration-500 rounded-lg">
+                                        <img id="exp2-slide-2" src="education & Experiens/pkm 3.jpg" alt="Dokumentasi PKM 2" class="max-h-full max-w-full object-contain absolute inset-0 m-auto opacity-0 transition-opacity duration-500 rounded-lg">
+                                    </div>
+
+                                    <!-- Navigasi Panah Geser -->
+                                    <div class="absolute inset-0 flex items-center justify-between p-2 pointer-events-none group-hover:pointer-events-auto opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <button type="button" onclick="prevExp2Slide()" class="w-7 h-7 rounded-full bg-night/80 text-gold flex items-center justify-center border border-white/10 hover:bg-gold hover:text-night transition shadow-md">
+                                            <i class="fa-solid fa-chevron-left text-[10px]"></i>
+                                        </button>
+                                        <button type="button" onclick="nextExp2Slide()" class="w-7 h-7 rounded-full bg-night/80 text-gold flex items-center justify-center border border-white/10 hover:bg-gold hover:text-night transition shadow-md">
+                                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                                        </button>
+                                    </div>
+
+                                    <!-- Indikator Titik -->
+                                    <div class="absolute bottom-1.5 left-1/2 -translate-x-1/2 flex gap-1.5 px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 z-10">
+                                        <span onclick="setExp2Slide(0)" class="exp2-dot w-1.5 h-1.5 rounded-full bg-gold cursor-pointer transition-all"></span>
+                                        <span onclick="setExp2Slide(1)" class="exp2-dot w-1.5 h-1.5 rounded-full bg-white/40 cursor-pointer transition-all"></span>
+                                    </div>
+                                </div>
+
+                                <p class="mt-4 text-xs sm:text-sm text-muted leading-6">
+                                    Memberikan pelatihan Google Docs dan Google Form serta membantu peserta memahami penggunaan teknologi untuk administrasi dan survei.
+                                </p>
+                            </div>
+                        </article>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ==================== SCRIPT JAVASCRIPT SLIDER (AMAN & BEBAS ERROR) ==================== -->
+<script>
+    (function () {
+        // 1. EDUCATION SLIDER
+        let currentEdu = 0;
+        const eduList = [document.getElementById('edu-slide-1'), document.getElementById('edu-slide-2'), document.getElementById('edu-slide-3')];
+        const eduDotsList = document.querySelectorAll('.edu-dot');
+
+        function updateEdu() {
+            eduList.forEach((slide, idx) => {
+                if (slide) {
+                    if (idx === currentEdu) {
+                        slide.classList.remove('opacity-0'); slide.classList.add('opacity-100');
+                        if (eduDotsList[idx]) { eduDotsList[idx].classList.remove('bg-white/40'); eduDotsList[idx].classList.add('bg-gold'); }
+                    } else {
+                        slide.classList.remove('opacity-100'); slide.classList.add('opacity-0');
+                        if (eduDotsList[idx]) { eduDotsList[idx].classList.remove('bg-gold'); eduDotsList[idx].classList.add('bg-white/40'); }
+                    }
+                }
+            });
+        }
+        window.setEduSlide = function(i) { currentEdu = i; updateEdu(); };
+        window.nextEduSlide = function() { currentEdu = (currentEdu + 1) % eduList.length; updateEdu(); };
+        window.prevEduSlide = function() { currentEdu = (currentEdu - 1 + eduList.length) % eduList.length; updateEdu(); };
+
+        // 2. EXPERIENCE 1 SLIDER (AI Intern)
+        let currentExp1 = 0;
+        const exp1List = [document.getElementById('exp1-slide-1'), document.getElementById('exp1-slide-2'), document.getElementById('exp1-slide-3')];
+        const exp1DotsList = document.querySelectorAll('.exp1-dot');
+
+        function updateExp1() {
+            exp1List.forEach((slide, idx) => {
+                if (slide) {
+                    if (idx === currentExp1) {
+                        slide.classList.remove('opacity-0'); slide.classList.add('opacity-100');
+                        if (exp1DotsList[idx]) { exp1DotsList[idx].classList.remove('bg-white/40'); exp1DotsList[idx].classList.add('bg-gold'); }
+                    } else {
+                        slide.classList.remove('opacity-100'); slide.classList.add('opacity-0');
+                        if (exp1DotsList[idx]) { exp1DotsList[idx].classList.remove('bg-gold'); exp1DotsList[idx].classList.add('bg-white/40'); }
+                    }
+                }
+            });
+        }
+        window.setExp1Slide = function(i) { currentExp1 = i; updateExp1(); };
+        window.nextExp1Slide = function() { currentExp1 = (currentExp1 + 1) % exp1List.length; updateExp1(); };
+        window.prevExp1Slide = function() { currentExp1 = (currentExp1 - 1 + exp1List.length) % exp1List.length; updateExp1(); };
+
+        // 3. EXPERIENCE 2 SLIDER (Pelatih PKM)
+        let currentExp2 = 0;
+        const exp2List = [document.getElementById('exp2-slide-1'), document.getElementById('exp2-slide-2')];
+        const exp2DotsList = document.querySelectorAll('.exp2-dot');
+
+        function updateExp2() {
+            exp2List.forEach((slide, idx) => {
+                if (slide) {
+                    if (idx === currentExp2) {
+                        slide.classList.remove('opacity-0'); slide.classList.add('opacity-100');
+                        if (exp2DotsList[idx]) { exp2DotsList[idx].classList.remove('bg-white/40'); exp2DotsList[idx].classList.add('bg-gold'); }
+                    } else {
+                        slide.classList.remove('opacity-100'); slide.classList.add('opacity-0');
+                        if (exp2DotsList[idx]) { exp2DotsList[idx].classList.remove('bg-gold'); exp2DotsList[idx].classList.add('bg-white/40'); }
+                    }
+                }
+            });
+        }
+        window.setExp2Slide = function(i) { currentExp2 = i; updateExp2(); };
+        window.nextExp2Slide = function() { currentExp2 = (currentExp2 + 1) % exp2List.length; updateExp2(); };
+        window.prevExp2Slide = function() { currentExp2 = (currentExp2 - 1 + exp2List.length) % exp2List.length; updateExp2(); };
+    })();
+</script>
+<!-- ==================== PROJECTS SECTION ==================== -->
+<section id="proyek" class="projects-section py-24">
+    <div class="section-wrap">
+
+        <!-- Section Header -->
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12"
+             data-aos="fade-up">
+            <div>
+                <div class="eyebrow mb-5">
+                    <span class="eyebrow-dot"></span>
+                    Karya Terpilih
+                </div>
+
+                <h2 class="display-title text-4xl sm:text-5xl text-ink">
+                    Proyek &
+                    <br>
+                    <span class="gold-text">Hasil Karya.</span>
+                </h2>
+            </div>
+
+            <p class="max-w-md text-sm leading-7 text-muted">
+                Kumpulan proyek Artificial Intelligence, data analytics,
+                web application, dan mobile app yang dikembangkan
+                melalui pengalaman akademik dan proyek mandiri.
+            </p>
+        </div>
+
+        <!-- Filter Buttons -->
+        <div class="project-filters flex flex-wrap gap-3 mb-10"
+             data-aos="fade-up">
+
+            <button type="button"
+                    class="filter-btn active"
+                    data-filter="all">
+                Semua Proyek
+            </button>
+
+            <button type="button"
+                    class="filter-btn"
+                    data-filter="ai">
+                <i class="fa-solid fa-brain"></i>
+                AI &amp; Data
+            </button>
+
+            <button type="button"
+                    class="filter-btn"
+                    data-filter="web">
+                <i class="fa-solid fa-globe"></i>
+                Web Application
+            </button>
+
+            <button type="button"
+                    class="filter-btn"
+                    data-filter="mobile">
+                <i class="fa-solid fa-mobile-screen-button"></i>
+                Mobile App
+            </button>
+        </div>
+
+        <!-- Project Grid -->
+        <div class="projects-grid">
+
+            <!-- PROJECT 1: TRENDLENS AI -->
+            <article class="project-card project-card-item ai web"
+                     data-aos="fade-up">
+
+                <div class="project-image">
+                    <img
+                        src="images/TrenLensAI.png"
+                        alt="TrendLens AI Fashion Detection"
+                        loading="lazy">
+
+                    <span class="project-category">AI &amp; WEB</span>
+
+                    <a href="images/TrenLensAI.png"
+                       class="project-preview glightbox"
+                       data-gallery="projects"
+                       title="TrendLens AI">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+
+                <div class="project-content">
+                    <div class="project-meta">Skripsi · 2025–2026</div>
+
+                    <h3>TrendLens AI — Deteksi &amp; Analisis Tren Fashion</h3>
+
+                    <p>
+                        Aplikasi deteksi objek fashion menggunakan YOLOv11,
+                        FastAPI, dan Laravel untuk mendukung analisis
+                        tren fashion berbasis data.
+                    </p>
+
+                    <div class="project-tech">
+                        <span>YOLOv11</span>
+                        <span>FastAPI</span>
+                        <span>Laravel</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- PROJECT 2: K-MEANS -->
+            <article class="project-card project-card-item ai"
+                     data-aos="fade-up" data-aos-delay="80">
+
+                <div class="project-image">
+                    <img
+                        src="images/power.jpg"
+                        alt="Analisis Clustering K-Means"
+                        loading="lazy">
+
+                    <span class="project-category">DATA ANALYTICS</span>
+
+                    <a href="images/power.jpg"
+                       class="project-preview glightbox"
+                       data-gallery="projects"
+                       title="K-Means Clustering">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+
+                <div class="project-content">
+                    <div class="project-meta">Publikasi Jurnal · 2025</div>
+
+                    <h3>Analisis Clustering K-Means Kelayakan SD</h3>
+
+                    <p>
+                        Pengelompokan data kelayakan ruang kelas dan
+                        tenaga kependidikan sekolah dasar di Indonesia
+                        menggunakan metode clustering.
+                    </p>
+
+                    <div class="project-tech">
+                        <span>K-Means</span>
+                        <span>Orange</span>
+                        <span>Power BI</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- PROJECT 3: PUSTAKA BOOKING -->
+            <article class="project-card project-card-item web"
+                     data-aos="fade-up" data-aos-delay="160">
+
+                <div class="project-image">
+                    <img
+                        src="images/pustaka booking.png"
+                        alt="Sistem Informasi Perpustakaan"
+                        loading="lazy">
+
+                    <span class="project-category">WEB APPLICATION</span>
+
+                    <a href="images/pustaka booking.png"
+                       class="project-preview glightbox"
+                       data-gallery="projects"
+                       title="Pustaka Booking">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+
+                <div class="project-content">
+                    <div class="project-meta">Web Application · 2024</div>
+
+                    <h3>Sistem Informasi Perpustakaan</h3>
+
+                    <p>
+                        Sistem pengelolaan buku, transaksi peminjaman,
+                        booking online, dan laporan statistik
+                        perpustakaan.
+                    </p>
+
+                    <div class="project-tech">
+                        <span>CodeIgniter 3</span>
+                        <span>PHP</span>
+                        <span>MySQL</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- PROJECT 4: VEGENESIA -->
+            <article class="project-card project-card-item mobile"
+                     data-aos="fade-up">
+
+                <div class="project-image">
+                    <img
+                        src="images/vigenesia.png"
+                        alt="Vegenesia Mobile App"
+                        loading="lazy">
+
+                    <span class="project-category">MOBILE APP</span>
+
+                    <a href="images/vigenesia.png"
+                       class="project-preview glightbox"
+                       data-gallery="projects"
+                       title="Vegenesia Mobile App">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+
+                <div class="project-content">
+                    <div class="project-meta">Mobile Application · 2024</div>
+
+                    <h3>Vegenesia — Motivasi Harian</h3>
+
+                    <p>
+                        Aplikasi Android berbasis Flutter yang
+                        menyediakan kutipan motivasi harian
+                        dan fitur favorit.
+                    </p>
+
+                    <div class="project-tech">
+                        <span>Flutter</span>
+                        <span>Dart</span>
+                        <span>Android</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- PROJECT 5: DATA AKADEMIK -->
+            <article class="project-card project-card-item web"
+                     data-aos="fade-up" data-aos-delay="80">
+
+                <div class="project-image">
+                    <img
+                        src="images/data mahasiswa.png"
+                        alt="Sistem Manajemen Data Akademik"
+                        loading="lazy">
+
+                    <span class="project-category">DASHBOARD</span>
+
+                    <a href="images/data mahasiswa.png"
+                       class="project-preview glightbox"
+                       data-gallery="projects"
+                       title="Data Akademik">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+
+                <div class="project-content">
+                    <div class="project-meta">Web Dashboard · 2024</div>
+
+                    <h3>Sistem Manajemen Data Akademik</h3>
+
+                    <p>
+                        Dashboard administrasi untuk mengelola data
+                        jurusan, dosen, mahasiswa, mata kuliah,
+                        dan operasi CRUD.
+                    </p>
+
+                    <div class="project-tech">
+                        <span>PHP</span>
+                        <span>HTML/CSS</span>
+                        <span>MySQL</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- PROJECT 6: MORN STORE -->
+            <article class="project-card project-card-item web"
+                     data-aos="fade-up" data-aos-delay="160">
+
+                <div class="project-image">
+                    <img
+                        src="images/Morn Store.png"
+                        alt="Morn Store Online Shop"
+                        loading="lazy">
+
+                    <span class="project-category">E-COMMERCE</span>
+
+                    <a href="images/Morn Store.png"
+                       class="project-preview glightbox"
+                       data-gallery="projects"
+                       title="Morn Store">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+
+                <div class="project-content">
+                    <div class="project-meta">E-Commerce · 2023</div>
+
+                    <h3>Morn Store — Online Store</h3>
+
+                    <p>
+                        Landing page toko online produk iPhone
+                        dengan desain modern, bersih,
+                        responsif, dan terstruktur.
+                    </p>
+
+                    <div class="project-tech">
+                        <span>HTML5</span>
+                        <span>CSS3</span>
+                        <span>UI Design</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- PROJECT 7: ONBOARDING BUDDY -->
+            <article class="project-card project-card-item ai"
+                     data-aos="fade-up">
+
+                <div class="project-image">
+                    <img
+                        src="images/onboarding.png"
+                        alt="Onboarding Buddy AI Chatbot"
+                        loading="lazy">
+
+                    <span class="project-category">AI AGENT</span>
+
+                    <a href="images/onboarding.png"
+                       class="project-preview glightbox"
+                       data-gallery="onboarding"
+                       title="Onboarding Buddy — Alur Langflow">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+
+                    <a href="images/hasil onboarding.png"
+                       class="glightbox project-hidden-image"
+                       data-gallery="onboarding"
+                       title="Onboarding Buddy — Hasil Chat"
+                       aria-label="Lihat hasil chat Onboarding Buddy">
+                    </a>
+                </div>
+
+                <div class="project-content">
+                    <div class="project-meta">IBM SkillsBuild · 2026</div>
+
+                    <h3>Onboarding Buddy — Chatbot Karyawan Baru</h3>
+
+                    <p>
+                        Chatbot AI berbasis Langflow untuk menjawab
+                        pertanyaan karyawan baru menggunakan dokumen
+                        FAQ, Astra DB, dan model Gemini.
+                    </p>
+
+                    <div class="project-tech">
+                        <span>Langflow</span>
+                        <span>Astra DB</span>
+                        <span>Gemini</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- PROJECT 8: SENTIMENT ANALYSIS -->
+            <article class="project-card project-card-item ai"
+                     data-aos="fade-up" data-aos-delay="80">
+
+                <div class="project-image">
+                    <img
+                        src="images/started data.png"
+                        alt="Sentiment Analysis E-Commerce"
+                        loading="lazy">
+
+                    <span class="project-category">AI &amp; DATA</span>
+
+                    <a href="images/hasil starter dta.png"
+                       class="project-preview glightbox"
+                       data-gallery="projects"
+                       title="Sentiment Analysis">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+
+                <div class="project-content">
+                    <div class="project-meta">IBM SkillsBuild · 2026</div>
+
+                    <h3>Sentiment Analysis — Ulasan Produk E-Commerce</h3>
+
+                    <p>
+                        Alur analisis CSV ulasan produk menggunakan
+                        Gemini untuk menghasilkan ringkasan serta
+                        rekomendasi teknis dan bisnis.
+                    </p>
+
+                    <div class="project-tech">
+                        <span>Langflow</span>
+                        <span>Gemini</span>
+                        <span>Prompt Engineering</span>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </div>
+</section>
+
+<!-- ==================== PROJECTS CSS ==================== -->
+<style>
+    .projects-section {
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Project grid */
+    .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 26px;
+        align-items: stretch;
+    }
+
+    /* Card */
+    .project-card {
+        min-width: 0;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(214, 167, 92, 0.17);
+        border-radius: 20px;
+        background: rgba(20, 22, 32, 0.88);
+        transition:
+            transform 0.35s ease,
+            border-color 0.35s ease,
+            box-shadow 0.35s ease;
+    }
+
+    .project-card:hover {
+        transform: translateY(-6px);
+        border-color: rgba(214, 167, 92, 0.58);
+        box-shadow: 0 18px 42px rgba(0, 0, 0, 0.20);
+    }
+
+    /* Image */
+    .project-image {
+        position: relative;
+        width: 100%;
+        height: 225px;
+        flex-shrink: 0;
+        overflow: hidden;
+        background: #191a21;
+    }
+
+    .project-image img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        transition: transform 0.55s ease, opacity 0.35s ease;
+    }
+
+    .project-card:hover .project-image img {
+        transform: scale(1.045);
+    }
+
+    /* Category badge */
+    .project-category {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        z-index: 2;
+        display: inline-flex;
+        align-items: center;
+        padding: 8px 12px;
+        border: 1px solid rgba(255, 255, 255, 0.13);
+        border-radius: 50px;
+        background: rgba(12, 12, 15, 0.76);
+        color: #e5bd79;
+        font-size: 9px;
+        font-weight: 800;
+        letter-spacing: 1.1px;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+
+    /* Preview icon */
+    .project-preview {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #17130e;
+        background: rgba(8, 8, 10, 0.36);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        text-decoration: none;
+    }
+
+    .project-preview i {
+        display: grid;
+        place-items: center;
+        width: 46px;
+        height: 46px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        background: #d6a75c;
+        font-size: 15px;
+        transition: transform 0.3s ease;
+    }
+
+    .project-card:hover .project-preview,
+    .project-preview:focus-visible {
+        opacity: 1;
+    }
+
+    .project-card:hover .project-preview i {
+        transform: scale(1.08);
+    }
+
+    .project-hidden-image {
+        display: none;
+    }
+
+    /* Card content */
+    .project-content {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 23px;
+    }
+
+    .project-meta {
+        margin-bottom: 10px;
+        color: #d6a75c;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 1.1px;
+        line-height: 1.6;
+        text-transform: uppercase;
+    }
+
+    .project-content h3 {
+        margin: 0 0 12px;
+        color: #f4f0e8;
+        font-size: 17px;
+        font-weight: 800;
+        line-height: 1.55;
+        overflow-wrap: anywhere;
+    }
+
+    .project-content p {
+        margin: 0 0 20px;
+        color: #a9a9b3;
+        font-size: 12px;
+        line-height: 1.9;
+    }
+
+    /* Technology tags */
+    .project-tech {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        margin-top: auto;
+        padding-top: 2px;
+    }
+
+    .project-tech span {
+        display: inline-flex;
+        align-items: center;
+        padding: 6px 10px;
+        border: 1px solid rgba(214, 167, 92, 0.17);
+        border-radius: 7px;
+        background: rgba(214, 167, 92, 0.06);
+        color: #c9b99e;
+        font-size: 10px;
+        font-weight: 600;
+        line-height: 1.5;
+    }
+
+    /* Filter buttons */
+    .project-filters .filter-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 11px 17px;
+        border: 1px solid rgba(214, 167, 92, 0.22);
+        border-radius: 50px;
+        background: transparent;
+        color: #b7b4ad;
+        font-family: inherit;
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.25s ease;
+    }
+
+    .project-filters .filter-btn:hover,
+    .project-filters .filter-btn.active {
+        border-color: #d6a75c;
+        background: #d6a75c;
+        color: #17130e;
+    }
+
+    .project-filters .filter-btn i {
+        font-size: 11px;
+    }
+
+    /* Filter animation */
+    .project-card-item {
+        animation: projectFadeIn 0.35s ease both;
+    }
+
+    .project-card-item.is-hidden {
+        display: none !important;
+    }
+
+    @keyframes projectFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Tablet */
+    @media (max-width: 1024px) {
+        .projects-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .project-image {
+            height: 220px;
+        }
+
+        .project-content {
+            padding: 21px;
+        }
+    }
+
+    /* Mobile */
+    @media (max-width: 640px) {
+        .projects-section {
+            padding-top: 65px;
+            padding-bottom: 65px;
+        }
+
+        .projects-grid {
+            grid-template-columns: minmax(0, 1fr);
+            gap: 20px;
+        }
+
+        .project-image {
+            height: auto;
+            aspect-ratio: 16 / 10;
+        }
+
+        .project-content {
+            padding: 21px;
+        }
+
+        .project-content h3 {
+            font-size: 16px;
+        }
+
+        .project-content p {
+            font-size: 12px;
+        }
+
+        .project-filters {
+            gap: 8px;
+        }
+
+        .project-filters .filter-btn {
+            padding: 10px 13px;
+            font-size: 10px;
+        }
+
+        .project-preview {
+            opacity: 1;
+            inset: auto 12px 12px auto;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: transparent;
+        }
+
+        .project-preview i {
+            width: 38px;
+            height: 38px;
+            font-size: 12px;
+        }
+    }
+
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+        .project-card,
+        .project-image img,
+        .project-preview,
+        .project-preview i {
+            transition: none;
+        }
+
+        .project-card-item {
+            animation: none;
+        }
+    }
+</style>
+
+<!-- ==================== PROJECT FILTER SCRIPT ==================== -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const projectCards = document.querySelectorAll('.project-card-item');
+
+    filterButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            const selectedFilter = this.dataset.filter;
+
+            filterButtons.forEach(function (item) {
+                item.classList.remove('active');
+            });
+
+            this.classList.add('active');
+
+            projectCards.forEach(function (card) {
+                const categories = Array.from(card.classList);
+
+                const shouldShow =
+                    selectedFilter === 'all' ||
+                    categories.includes(selectedFilter);
+
+                card.classList.toggle('is-hidden', !shouldShow);
+
+                if (shouldShow) {
+                    card.style.animation = 'none';
+                    void card.offsetWidth;
+                    card.style.animation = '';
+                }
+            });
+        });
+    });
+});
+</script>
+<!-- ==================== END PROJECTS SECTION ==================== -->
+
+
+      <!-- SKILLS & EXPERTISE -->
+<section id="keahlian" class="py-24 bg-white/[.02] border-y border-white/10 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        
+        <!-- Header Section -->
+        <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gold/10 border border-gold/25 text-gold text-xs font-bold uppercase tracking-wider mb-4">
+                <span class="w-2 h-2 rounded-full bg-gold animate-pulse"></span> Core Competencies &amp; Tech Stack
+            </div>
+            <h2 class="display-title text-3xl sm:text-5xl text-ink tracking-tight">
+                Keahlian &amp; Ekosistem Teknologi
+            </h2>
+            <p class="text-muted mt-4 text-sm sm:text-base leading-relaxed">
+                Kombinasi keahlian teknis dalam merancang model <b class="text-ink">Artificial Intelligence</b>, membangun arsitektur <b class="text-ink">Web Backend</b> yang handal, serta mengolah data untuk mendukung keputusan bisnis yang akurat.
+            </p>
+        </div>
+
+        <!-- Grid Cards -->
+        <div class="grid md:grid-cols-3 gap-8">
+
+            <!-- 1. AI & COMPUTER VISION -->
+            <div class="tool-card group soft-card rounded-[28px] p-8 border border-white/10 bg-night/50 backdrop-blur-md hover:border-gold/40 transition-all duration-300 hover:-translate-y-1.5" data-aos="fade-up">
+                <div class="flex items-center justify-between mb-8">
+                    <div>
+                        <span class="text-[10px] font-black uppercase tracking-[.2em] gold-text px-2.5 py-1 rounded-md bg-gold/10 border border-gold/20">Specialization</span>
+                        <h3 class="text-xl font-extrabold text-ink mt-2">AI &amp; Computer Vision</h3>
+                    </div>
+                    <div class="w-14 h-14 rounded-2xl bg-gold/10 border border-gold/30 flex items-center justify-center gold-text group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-brain text-xl"></i>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3.5">
+                    <div class="flex items-center gap-3 p-3.5 rounded-2xl bg-white/[.03] border border-white/10 hover:bg-white/[.06] transition">
+                        <img class="tool-logo w-7 h-7 object-contain" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="Python">
+                        <div><b class="text-xs text-ink block">Python</b><p class="text-[10px] text-muted">Core Language</p></div>
+                    </div>
+                    <div class="flex items-center gap-3 p-3.5 rounded-2xl bg-white/[.03] border border-white/10 hover:bg-white/[.06] transition">
+                        <div class="w-8 h-8 rounded-xl bg-gold text-night flex items-center justify-center font-black text-[10px] shadow-sm">YOLO</div>
+                        <div><b class="text-xs text-ink block">YOLOv11</b><p class="text-[10px] text-muted">Object Detection</p></div>
+                    </div>
+                    <div class="flex items-center gap-3 p-3.5 rounded-2xl bg-white/[.03] border border-white/10 hover:bg-white/[.06] transition">
+                        <img class="tool-logo w-7 h-7 object-contain" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg" alt="FastAPI">
+                        <div><b class="text-xs text-ink block">FastAPI</b><p class="text-[10px] text-muted">AI API Service</p></div>
+                    </div>
+                    <div class="flex items-center gap-3 p-3.5 rounded-2xl bg-white/[.03] border border-white/10 hover:bg-white/[.06] transition">
+                        <div class="w-8 h-8 rounded-xl bg-white/5 gold-text flex items-center justify-center"><i class="fa-solid fa-eye text-sm"></i></div>
+                        <div><b class="text-xs text-ink block">OpenCV</b><p class="text-[10px] text-muted">Image Processing</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. WEB DEVELOPMENT -->
+            <div class="tool-card group soft-card rounded-[28px] p-8 border border-white/10 bg-night/50 backdrop-blur-md hover:border-gold/40 transition-all duration-300 hover:-translate-y-1.5" data-aos="fade-up" data-aos-delay="100">
+                <div class="flex items-center justify-between mb-8">
+                    <div>
+                        <span class="text-[10px] font-black uppercase tracking-[.2em] gold-text px-2.5 py-1 rounded-md bg-gold/10 border border-gold/20">Engineering</span>
+                        <h3 class="text-xl font-extrabold text-ink mt-2">Web Development</h3>
+                    </div>
+                    <div class="w-14 h-14 rounded-2xl bg-gold/10 border border-gold/30 flex items-center justify-center gold-text group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-code text-xl"></i>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3.5">
+                    <div class="flex items-center gap-3 p-3.5 rounded-2xl bg-white/[.03] border border-white/10 hover:bg-white/[.06] transition">
+                        <img class="tool-logo w-7 h-7 object-contain" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg" alt="Laravel">
+                        <div><b class="text-xs text-ink block">Laravel</b><p class="text-[10px] text-muted">PHP Framework</p></div>
+                    </div>
+                    <div class="flex items-center gap-3 p-3.5 rounded-2xl bg-white/[.03] border border-white/10 hover:bg-white/[.06] transition">
+                        <img class="tool-logo w-7 h-7 object-contain" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg" alt="PHP">
+                        <div><b class="text-xs text-ink block">PHP</b><p class="text-[10px] text-muted">Backend Logic</p></div>
+                    </div>
+                    <div class="flex items-center gap-3 p-3.5 rounded-2xl bg-white/[.03] border border-white/10 hover:bg-white/[.06] transition">
+                        <img class="tool-logo w-7 h-7 object-contain" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind CSS">
+                        <div><b class="text-xs text-ink block">Tailwind</b><p class="text-[10px] text-muted">Modern UI Design</p></div>
+                    </div>
+                    <div class="flex items-center gap-3 p-3.5 rounded-2xl bg-white/[.03] border border-white/10 hover:bg-white/[.06] transition">
+                        <img class="tool-logo w-7 h-7 object-contain" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" alt="MySQL">
+                        <div><b class="text-xs text-ink block">MySQL</b><p class="text-[10px] text-muted">Database Mgmt</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. DATA ANALYTICS & TOOLS -->
+            <div class="tool-card group soft-card rounded-[28px] p-8 border border-white/10 bg-night/50 backdrop-blur-md hover:border-gold/40 transition-all duration-300 hover:-translate-y-1.5" data-aos="fade-up" data-aos-delay="200">
+                <div class="flex items-center justify-between mb-8">
+                    <div>
+                        <span class="text-[10px] font-black uppercase tracking-[.2em] gold-text px-2.5 py-1 rounded-md bg-gold/10 border border-gold/20">Intelligence</span>
+                        <h3 class="text-xl font-extrabold text-ink mt-2">Analytics &amp; Tools</h3>
+                    </div>
+                    <div class="w-14 h-14 rounded-2xl bg-gold/10 border border-gold/30 flex items-center justify-center gold-text group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-chart-pie text-xl"></i>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3.5">
+                    <div class="flex items-center gap-3 p-3.5 rounded-2xl bg-white/[.03] border border-white/10 hover:bg-white/[.06] transition">
+                        <img class="tool-logo w-7 h-7 object-contain" src="logo/powerbi.jpg" alt="Power BI">
+                        <div><b class="text-xs text-ink block">Power BI</b><p class="text-[10px] text-muted">BI Dashboard</p></div>
+                    </div>
+                    <div class="flex items-center gap-3 p-3.5 rounded-2xl bg-white/[.03] border border-white/10 hover:bg-white/[.06] transition">
+                        <div class="w-8 h-8 rounded-xl bg-white/5 gold-text flex items-center justify-center"><i class="fa-solid fa-chart-line text-sm"></i></div>
+                        <div><b class="text-xs text-ink block">W&amp;B</b><p class="text-[10px] text-muted">Tracking Model</p></div>
+                    </div>
+                    <div class="flex items-center gap-3 p-3.5 rounded-2xl bg-white/[.03] border border-white/10 hover:bg-white/[.06] transition">
+                        <div class="w-8 h-8 rounded-xl bg-white/5 gold-text flex items-center justify-center font-black text-[9px]">KNIME</div>
+                        <div><b class="text-xs text-ink block">KNIME</b><p class="text-[10px] text-muted">Data Mining</p></div>
+                    </div>
+                    <div class="flex items-center gap-3 p-3.5 rounded-2xl bg-white/[.03] border border-white/10 hover:bg-white/[.06] transition">
+                        <div class="w-8 h-8 rounded-xl bg-white/5 gold-text flex items-center justify-center"><i class="fa-solid fa-network-wired text-sm"></i></div>
+                        <div><b class="text-xs text-ink block">MikroTik</b><p class="text-[10px] text-muted">Networking</p></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Supporting Skills Badges -->
+        <div class="mt-12 text-center" data-aos="fade-up" data-aos-delay="250">
+            <p class="text-xs font-bold uppercase tracking-widest text-muted mb-4">Supporting Tech &amp; Frameworks</p>
+            <div class="flex flex-wrap justify-center gap-2.5">
+                <span class="px-4 py-2 rounded-xl bg-white/[.03] border border-white/10 text-xs font-semibold text-ink hover:border-gold/40 transition">Roboflow</span>
+                <span class="px-4 py-2 rounded-xl bg-white/[.03] border border-white/10 text-xs font-semibold text-ink hover:border-gold/40 transition">CodeIgniter 3</span>
+                <span class="px-4 py-2 rounded-xl bg-white/[.03] border border-white/10 text-xs font-semibold text-ink hover:border-ink/40 transition">HTML5 / CSS3</span>
+                <span class="px-4 py-2 rounded-xl bg-white/[.03] border border-white/10 text-xs font-semibold text-ink hover:border-gold/40 transition">Flutter</span>
+                <span class="px-4 py-2 rounded-xl bg-white/[.03] border border-white/10 text-xs font-semibold text-ink hover:border-gold/40 transition">Dart</span>
+                <span class="px-4 py-2 rounded-xl bg-white/[.03] border border-white/10 text-xs font-semibold text-ink hover:border-gold/40 transition">Orange Data Mining</span>
+            </div>
+        </div>
+
+    </div>
+</section>
+              <!-- Hard Skills & Personal Skills (Lebar Dibatasi & Rapi di Tengah) -->
+<div class="max-w-6xl mx-auto px-4 sm:px-6 mt-20">
+    <div class="grid lg:grid-cols-2 gap-8 items-start">
+        
+        <!-- ==================== HARD SKILLS ==================== -->
+        <div data-aos="fade-right" class="flex flex-col">
+            <div class="flex items-center gap-3 mb-7">
+                <div class="w-10 h-10 rounded-xl bg-gold/10 border border-gold/30 flex items-center justify-center gold-text">
+                    <i class="fa-solid fa-laptop-code text-lg"></i>
+                </div>
+                <div>
+                    <h3 class="display-title text-2xl sm:text-3xl text-ink">Hard Skills</h3>
+                    <p class="text-xs text-muted">Perangkat lunak dan perkakas teknis harian</p>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                
+                <!-- 1. Technical & Programming -->
+                <div class="soft-card rounded-2xl p-6 border border-white/10 bg-night/40 backdrop-blur-md">
+                    <div class="text-xs font-extrabold text-ink uppercase tracking-wider mb-4 gold-text flex items-center gap-2">
+                        <i class="fa-solid fa-code text-xs"></i> Programming &amp; Development
+                    </div>
+                    <div class="flex flex-wrap gap-2.5">
+                        <span class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/[.04] border border-white/10 text-xs font-semibold text-ink hover:border-gold/40 transition">
+                            <img class="w-4 h-4 object-contain" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="Python"> Python
+                        </span>
+                        <span class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/[.04] border border-white/10 text-xs font-semibold text-ink hover:border-gold/40 transition">
+                            <img class="w-4 h-4 object-contain" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg" alt="PHP"> PHP
+                        </span>
+                        <span class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/[.04] border border-white/10 text-xs font-semibold text-ink hover:border-gold/40 transition">
+                            <img class="w-4 h-4 object-contain" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg" alt="Laravel"> Laravel
+                        </span>
+                        <span class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/[.04] border border-white/10 text-xs font-semibold text-ink hover:border-gold/40 transition">
+                            <img class="w-4 h-4 object-contain" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg" alt="FastAPI"> FastAPI
+                        </span>
+                        <span class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/[.04] border border-white/10 text-xs font-semibold text-ink hover:border-gold/40 transition">
+                            <img class="w-4 h-4 object-contain" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" alt="MySQL"> MySQL
+                        </span>
+                        <span class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/[.04] border border-white/10 text-xs font-semibold text-ink hover:border-gold/40 transition">
+                            <img class="w-4 h-4 object-contain" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg" alt="Bootstrap"> Bootstrap
+                        </span>
+                        <span class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/[.04] border border-white/10 text-xs font-semibold text-ink hover:border-gold/40 transition">
+                            <img class="w-4 h-4 object-contain" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg" alt="VS Code"> VS Code
+                        </span>
+                    </div>
+                </div>
+
+                <!-- 2. Data & Analytics -->
+                <div class="soft-card rounded-2xl p-6 border border-white/10 bg-night/40 backdrop-blur-md">
+                    <div class="text-xs font-extrabold text-ink uppercase tracking-wider mb-4 gold-text flex items-center gap-2">
+                        <i class="fa-solid fa-chart-simple text-xs"></i> Data Analytics &amp; AI Tools
+                    </div>
+                    <div class="flex flex-wrap gap-2.5">
+                        <span class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/[.04] border border-white/10 text-xs font-semibold text-ink hover:border-gold/40 transition">
+                            <img class="w-4 h-4 object-contain" src="logo/powerbi.jpg" alt="Power BI"> Power BI
+                        </span>
+                        <span class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/[.04] border border-white/10 text-xs font-semibold text-ink hover:border-gold/40 transition">
+                            <img class="w-4 h-4 object-contain" src="https://www.google.com/s2/favicons?domain=knime.com&sz=128" alt="KNIME"> KNIME Analytics
+                        </span>
+                        <span class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/[.04] border border-white/10 text-xs font-semibold text-ink hover:border-gold/40 transition">
+                            <img class="w-4 h-4 object-contain" src="https://www.google.com/s2/favicons?domain=orangedatamining.com&sz=128" alt="Orange"> Orange Mining
+                        </span>
+                    </div>
+                </div>
+
+                <!-- 3. Office Suite & Content Editing -->
+                <div class="soft-card rounded-2xl p-6 border border-white/10 bg-night/40 backdrop-blur-md">
+                    <div class="text-xs font-extrabold text-ink uppercase tracking-wider mb-4 gold-text flex items-center gap-2">
+                        <i class="fa-solid fa-file-lines text-xs"></i> Productivity &amp; Design
+                    </div>
+                    <div class="flex flex-wrap gap-2.5">
+                        <span class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/[.04] border border-white/10 text-xs font-semibold text-ink hover:border-gold/40 transition">
+                            <img class="w-4 h-4 object-contain" src="logo/word.png" alt="Word"> MS Word
+                        </span>
+                        <span class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/[.04] border border-white/10 text-xs font-semibold text-ink hover:border-gold/40 transition">
+                            <img class="w-4 h-4 object-contain" src="logo/excel.jpg" alt="Excel"> MS Excel
+                        </span>
+                        <span class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/[.04] border border-white/10 text-xs font-semibold text-ink hover:border-gold/40 transition">
+                            <img class="w-4 h-4 object-contain" src="logo/ppt.jpg" alt="PowerPoint"> MS PowerPoint
+                        </span>
+                        <span class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/[.04] border border-white/10 text-xs font-semibold text-ink hover:border-gold/40 transition">
+                            <img class="w-4 h-4 object-contain" src="logo/canva.jpg" alt="Canva"> Canva
+                        </span>
+                        <span class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/[.04] border border-white/10 text-xs font-semibold text-ink hover:border-gold/40 transition">
+                            <img class="w-4 h-4 object-contain" src="logo/capcut.jpg" alt="CapCut"> CapCut
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ==================== PERSONAL SKILLS ==================== -->
+        <div data-aos="fade-left" class="flex flex-col">
+            <div class="flex items-center gap-3 mb-7">
+                <div class="w-10 h-10 rounded-xl bg-gold/10 border border-gold/30 flex items-center justify-center gold-text">
+                    <i class="fa-solid fa-user-check text-lg"></i>
+                </div>
+                <div>
+                    <h3 class="display-title text-2xl sm:text-3xl text-ink">Personal Skills</h3>
+                    <p class="text-xs text-muted">Karakter profesional &amp; etos kerja</p>
+                </div>
+            </div>
+
+            <div class="soft-card rounded-[24px] p-6 sm:p-7 border border-white/10 bg-night/40 backdrop-blur-md">
+                <div class="space-y-4">
+                    
+                    <div class="flex items-start gap-4 p-3 rounded-2xl bg-white/[.02] border border-white/5 hover:border-gold/30 transition">
+                        <div class="w-8 h-8 rounded-xl bg-gold/10 text-gold flex items-center justify-center shrink-0 mt-0.5">
+                            <i class="fa-solid fa-users text-xs"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xs sm:text-sm font-bold text-ink">Kolaborasi &amp; Kerja Sama Tim</h4>
+                            <p class="text-xs text-muted mt-0.5 leading-relaxed">Mampu beradaptasi dengan cepat dalam tim lintas fungsi (developer, designer, &amp; data analyst).</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4 p-3 rounded-2xl bg-white/[.02] border border-white/5 hover:border-gold/30 transition">
+                        <div class="w-8 h-8 rounded-xl bg-gold/10 text-gold flex items-center justify-center shrink-0 mt-0.5">
+                            <i class="fa-solid fa-magnifying-glass text-xs"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xs sm:text-sm font-bold text-ink">Ketelitian &amp; Detail-Oriented</h4>
+                            <p class="text-xs text-muted mt-0.5 leading-relaxed">Fokus pada akurasi data, pengujian kodingan, dan kualitas luaran sistem yang optimal.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4 p-3 rounded-2xl bg-white/[.02] border border-white/5 hover:border-gold/30 transition">
+                        <div class="w-8 h-8 rounded-xl bg-gold/10 text-gold flex items-center justify-center shrink-0 mt-0.5">
+                            <i class="fa-solid fa-clock-check text-xs"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xs sm:text-sm font-bold text-ink">Komitmen &amp; Manajemen Waktu</h4>
+                            <p class="text-xs text-muted mt-0.5 leading-relaxed">Disiplin tinggi terhadap tenggat waktu (*deadline*) dan bertanggung jawab atas setiap deliverable.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4 p-3 rounded-2xl bg-white/[.02] border border-white/5 hover:border-gold/30 transition">
+                        <div class="w-8 h-8 rounded-xl bg-gold/10 text-gold flex items-center justify-center shrink-0 mt-0.5">
+                            <i class="fa-solid fa-comments text-xs"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xs sm:text-sm font-bold text-ink">Komunikasi Komunikatif</h4>
+                            <p class="text-xs text-muted mt-0.5 leading-relaxed">Mampu menyampaikan ide, dokumentasi teknis, dan laporan analisis data dengan jelas.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4 p-3 rounded-2xl bg-white/[.02] border border-white/5 hover:border-gold/30 transition">
+                        <div class="w-8 h-8 rounded-xl bg-gold/10 text-gold flex items-center justify-center shrink-0 mt-0.5">
+                            <i class="fa-solid fa-bolt text-xs"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xs sm:text-sm font-bold text-ink">Adaptabilitas &amp; Fast Learner</h4>
+                            <p class="text-xs text-muted mt-0.5 leading-relaxed">Antusias mempelajari alur kerja baru, framework modern, serta teknologi AI terkini.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- CERTIFICATIONS SECTION -->
+<section id="sertifikasi" class="py-24 bg-white/[.01] border-t border-white/10 relative overflow-hidden">
+    <div class="section-wrap max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <!-- Header Section -->
+        <div class="max-w-2xl mb-14" data-aos="fade-up">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gold/10 border border-gold/25 text-gold text-xs font-bold uppercase tracking-wider mb-4">
+                <span class="w-2 h-2 rounded-full bg-gold animate-pulse"></span> Credentials &amp; Certifications
+            </div>
+
+            <h2 class="display-title text-3xl sm:text-5xl text-ink leading-tight">
+                Sertifikasi &amp; Lisensi <br>
+                <span class="gold-text">Resmi &amp; Terverifikasi.</span>
+            </h2>
+
+            <p class="text-sm text-muted leading-relaxed mt-4">
+                Bukti kompetensi profesional dan pelatihan resmi di bidang Computer Vision, Web Engineering, Cybersecurity, Networking, dan Data Science.
+            </p>
+        </div>
+
+        <!-- Grid Sertifikat (Responsive 3 Kolom) -->
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-7">
+
+            <!-- 1. TOEFL -->
+            <article class="soft-card group rounded-[24px] overflow-hidden border border-white/10 bg-night/40 backdrop-blur-md hover:border-gold/40 transition-all duration-300 hover:-translate-y-1.5" data-aos="fade-up">
+                <div class="relative overflow-hidden aspect-[4/3] bg-black/40 flex items-center justify-center p-2">
+                    <img src="images/SertifikatDigitalBahasa_20261019_090144_page-0001.jpg" alt="TOEFL Prediction Test" class="w-full h-full object-contain rounded-lg group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                    <span class="absolute top-3 left-3 text-[10px] font-bold px-2.5 py-1 rounded-md bg-black/70 text-gold border border-white/10 backdrop-blur-md uppercase tracking-wider">Language</span>
+                </div>
+                <div class="p-5">
+                    <span class="text-[10px] text-muted font-bold block mb-1">Lembaga Bahasa</span>
+                    <h3 class="font-extrabold text-sm sm:text-base text-ink group-hover:text-gold transition-colors">TOEFL Prediction Test</h3>
+                </div>
+            </article>
+
+            <!-- 2. Program Analyst (BNSP) -->
+            <article class="soft-card group rounded-[24px] overflow-hidden border border-white/10 bg-night/40 backdrop-blur-md hover:border-gold/40 transition-all duration-300 hover:-translate-y-1.5" data-aos="fade-up" data-aos-delay="60">
+                <div class="relative overflow-hidden aspect-[4/3] bg-black/40 flex items-center justify-center p-2">
+                    <img src="images/15220087 (BNSP)_page-0001.jpg" alt="Program Analyst BNSP" class="w-full h-full object-contain rounded-lg group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                    <span class="absolute top-3 left-3 text-[10px] font-bold px-2.5 py-1 rounded-md bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 backdrop-blur-md uppercase tracking-wider">BNSP Competency</span>
+                </div>
+                <div class="p-5">
+                    <span class="text-[10px] text-muted font-bold block mb-1">Badan Nasional Sertifikasi Profesi</span>
+                    <h3 class="font-extrabold text-sm sm:text-base text-ink group-hover:text-gold transition-colors">Program Analyst / System Analyst</h3>
+                </div>
+            </article>
+
+            <!-- 3. MTCNA -->
+            <article class="soft-card group rounded-[24px] overflow-hidden border border-white/10 bg-night/40 backdrop-blur-md hover:border-gold/40 transition-all duration-300 hover:-translate-y-1.5" data-aos="fade-up" data-aos-delay="120">
+                <div class="relative overflow-hidden aspect-[4/3] bg-black/40 flex items-center justify-center p-2">
+                    <img src="images/mikrotik.png" alt="MTCNA" class="w-full h-full object-contain rounded-lg group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                    <span class="absolute top-3 left-3 text-[10px] font-bold px-2.5 py-1 rounded-md bg-blue-500/20 text-blue-400 border border-blue-500/30 backdrop-blur-md uppercase tracking-wider">Networking</span>
+                </div>
+                <div class="p-5">
+                    <span class="text-[10px] text-muted font-bold block mb-1">MikroTik Academy</span>
+                    <h3 class="font-extrabold text-sm sm:text-base text-ink group-hover:text-gold transition-colors">MikroTik Certified Network Associate (MTCNA)</h3>
+                </div>
+            </article>
+
+            <!-- 4. Image Captioning -->
+            <article class="soft-card group rounded-[24px] overflow-hidden border border-white/10 bg-night/40 backdrop-blur-md hover:border-gold/40 transition-all duration-300 hover:-translate-y-1.5" data-aos="fade-up">
+                <div class="relative overflow-hidden aspect-[4/3] bg-black/40 flex items-center justify-center p-2">
+                    <img src="images/create image captioning models_page-0001.jpg" alt="Create Image Captioning Models" class="w-full h-full object-contain rounded-lg group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                    <span class="absolute top-3 left-3 text-[10px] font-bold px-2.5 py-1 rounded-md bg-purple-500/20 text-purple-300 border border-purple-500/30 backdrop-blur-md uppercase tracking-wider">AI &amp; Computer Vision</span>
+                </div>
+                <div class="p-5">
+                    <span class="text-[10px] text-muted font-bold block mb-1">Google Cloud / DeepLearning.AI</span>
+                    <h3 class="font-extrabold text-sm sm:text-base text-ink group-hover:text-gold transition-colors">Create Image Captioning Models</h3>
+                </div>
+            </article>
+
+            <!-- 5. Build AI Agent -->
+            <article class="soft-card group rounded-[24px] overflow-hidden border border-white/10 bg-night/40 backdrop-blur-md hover:border-gold/40 transition-all duration-300 hover:-translate-y-1.5" data-aos="fade-up" data-aos-delay="60">
+                <div class="relative overflow-hidden aspect-[4/3] bg-black/40 flex items-center justify-center p-2">
+                    <img src="images/BuildanAIAgent_Badge20261019-21-2ixmi0_page-0001.jpg" alt="Build an AI Agent" class="w-full h-full object-contain rounded-lg group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                    <span class="absolute top-3 left-3 text-[10px] font-bold px-2.5 py-1 rounded-md bg-purple-500/20 text-purple-300 border border-purple-500/30 backdrop-blur-md uppercase tracking-wider">Artificial Intelligence</span>
+                </div>
+                <div class="p-5">
+                    <span class="text-[10px] text-muted font-bold block mb-1">IBM / Specialization Badge</span>
+                    <h3 class="font-extrabold text-sm sm:text-base text-ink group-hover:text-gold transition-colors">Build an AI Agent</h3>
+                </div>
+            </article>
+
+            <!-- 6. IBM Data -->
+            <article class="soft-card group rounded-[24px] overflow-hidden border border-white/10 bg-night/40 backdrop-blur-md hover:border-gold/40 transition-all duration-300 hover:-translate-y-1.5" data-aos="fade-up" data-aos-delay="120">
+                <div class="relative overflow-hidden aspect-[4/3] bg-black/40 flex items-center justify-center p-2">
+                    <img src="images/IBMDesign20261019-21-8sjqg7_page-0001.jpg" alt="Getting Started with Data" class="w-full h-full object-contain rounded-lg group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                    <span class="absolute top-3 left-3 text-[10px] font-bold px-2.5 py-1 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/30 backdrop-blur-md uppercase tracking-wider">Data Science</span>
+                </div>
+                <div class="p-5">
+                    <span class="text-[10px] text-muted font-bold block mb-1">IBM SkillsBuild</span>
+                    <h3 class="font-extrabold text-sm sm:text-base text-ink group-hover:text-gold transition-colors">Getting Started with Data</h3>
+                </div>
+            </article>
+
+            <!-- 7. ML Python -->
+            <article class="soft-card group rounded-[24px] overflow-hidden border border-white/10 bg-night/40 backdrop-blur-md hover:border-gold/40 transition-all duration-300 hover:-translate-y-1.5" data-aos="fade-up">
+                <div class="relative overflow-hidden aspect-[4/3] bg-black/40 flex items-center justify-center p-2">
+                    <img src="images/machine learning using python_page-0001.jpg" alt="Machine Learning Using Python" class="w-full h-full object-contain rounded-lg group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                    <span class="absolute top-3 left-3 text-[10px] font-bold px-2.5 py-1 rounded-md bg-purple-500/20 text-purple-300 border border-purple-500/30 backdrop-blur-md uppercase tracking-wider">Machine Learning</span>
+                </div>
+                <div class="p-5">
+                    <span class="text-[10px] text-muted font-bold block mb-1">Course Certificate</span>
+                    <h3 class="font-extrabold text-sm sm:text-base text-ink group-hover:text-gold transition-colors">Machine Learning Using Python</h3>
+                </div>
+            </article>
+
+            <!-- 8. Bioinformatika -->
+            <article class="soft-card group rounded-[24px] overflow-hidden border border-white/10 bg-night/40 backdrop-blur-md hover:border-gold/40 transition-all duration-300 hover:-translate-y-1.5" data-aos="fade-up" data-aos-delay="60">
+                <div class="relative overflow-hidden aspect-[4/3] bg-black/40 flex items-center justify-center p-2">
+                    <img src="images/bioinformtaika.png" alt="Workshop Bioinformatika" class="w-full h-full object-contain rounded-lg group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                    <span class="absolute top-3 left-3 text-[10px] font-bold px-2.5 py-1 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/30 backdrop-blur-md uppercase tracking-wider">Data Workshop</span>
+                </div>
+                <div class="p-5">
+                    <span class="text-[10px] text-muted font-bold block mb-1">Workshop Inovasi</span>
+                    <h3 class="font-extrabold text-sm sm:text-base text-ink group-hover:text-gold transition-colors">Data Science &amp; Bioinformatika</h3>
+                </div>
+            </article>
+
+            <!-- 9. Cybersecurity -->
+            <article class="soft-card group rounded-[24px] overflow-hidden border border-white/10 bg-night/40 backdrop-blur-md hover:border-gold/40 transition-all duration-300 hover:-translate-y-1.5" data-aos="fade-up" data-aos-delay="120">
+                <div class="relative overflow-hidden aspect-[4/3] bg-black/40 flex items-center justify-center p-2">
+                    <img src="images/Introduction_to_Cybersecurity_certificate_meyditriwardani-gmail-com_260d92ed-e523-4943-988d-c7959731e306_page-0001 (1).jpg" alt="Cybersecurity" class="w-full h-full object-contain rounded-lg group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                    <span class="absolute top-3 left-3 text-[10px] font-bold px-2.5 py-1 rounded-md bg-red-500/20 text-red-400 border border-red-500/30 backdrop-blur-md uppercase tracking-wider">Cybersecurity</span>
+                </div>
+                <div class="p-5">
+                    <span class="text-[10px] text-muted font-bold block mb-1">Cisco Networking Academy</span>
+                    <h3 class="font-extrabold text-sm sm:text-base text-ink group-hover:text-gold transition-colors">Introduction to Cybersecurity</h3>
+                </div>
+            </article>
+
+            <!-- 10. Network Security -->
+            <article class="soft-card group rounded-[24px] overflow-hidden border border-white/10 bg-night/40 backdrop-blur-md hover:border-gold/40 transition-all duration-300 hover:-translate-y-1.5" data-aos="fade-up">
+                <div class="relative overflow-hidden aspect-[4/3] bg-black/40 flex items-center justify-center p-2">
+                    <img src="images/Network_Support_and_Security_certificate_meyditriwardani-gmail-com_ecb432be-bdde-44b5-b25a-71432f3a038c_page-0001 (1).jpg" alt="Network Support" class="w-full h-full object-contain rounded-lg group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                    <span class="absolute top-3 left-3 text-[10px] font-bold px-2.5 py-1 rounded-md bg-blue-500/20 text-blue-400 border border-blue-500/30 backdrop-blur-md uppercase tracking-wider">Networking</span>
+                </div>
+                <div class="p-5">
+                    <span class="text-[10px] text-muted font-bold block mb-1">Cisco Networking Academy</span>
+                    <h3 class="font-extrabold text-sm sm:text-base text-ink group-hover:text-gold transition-colors">Network Support &amp; Security</h3>
+                </div>
+            </article>
+
+            <!-- 11. PCAP Python -->
+            <article class="soft-card group rounded-[24px] overflow-hidden border border-white/10 bg-night/40 backdrop-blur-md hover:border-gold/40 transition-all duration-300 hover:-translate-y-1.5" data-aos="fade-up" data-aos-delay="60">
+                <div class="relative overflow-hidden aspect-[4/3] bg-black/40 flex items-center justify-center p-2">
+                    <img src="images/Pcap.png" alt="PCAP Python Certificate" class="w-full h-full object-contain rounded-lg group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                    <span class="absolute top-3 left-3 text-[10px] font-bold px-2.5 py-1 rounded-md bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 backdrop-blur-md uppercase tracking-wider">Programming</span>
+                </div>
+                <div class="p-5">
+                    <span class="text-[10px] text-muted font-bold block mb-1">Python Institute</span>
+                    <h3 class="font-extrabold text-sm sm:text-base text-ink group-hover:text-gold transition-colors">PCAP – Certified Associate in Python</h3>
+                </div>
+            </article>
+
+            <!-- 12. PKM -->
+            <article class="soft-card group rounded-[24px] overflow-hidden border border-white/10 bg-night/40 backdrop-blur-md hover:border-gold/40 transition-all duration-300 hover:-translate-y-1.5" data-aos="fade-up" data-aos-delay="120">
+                <div class="relative overflow-hidden aspect-[4/3] bg-black/40 flex items-center justify-center p-2">
+                    <img src="images/pkm.png" alt="Sertifikat PKM" class="w-full h-full object-contain rounded-lg group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                    <span class="absolute top-3 left-3 text-[10px] font-bold px-2.5 py-1 rounded-md bg-white/10 text-gold border border-white/20 backdrop-blur-md uppercase tracking-wider">Community Service</span>
+                </div>
+                <div class="p-5">
+                    <span class="text-[10px] text-muted font-bold block mb-1">Pengabdian Masyarakat UBSI</span>
+                    <h3 class="font-extrabold text-sm sm:text-base text-ink group-hover:text-gold transition-colors">Pemateri &amp; Instruktur Google Workspace</h3>
+                </div>
+            </article>
+
+            <!-- 13. Entrepreneurship -->
+            <article class="soft-card group rounded-[24px] overflow-hidden border border-white/10 bg-night/40 backdrop-blur-md hover:border-gold/40 transition-all duration-300 hover:-translate-y-1.5" data-aos="fade-up" data-aos-delay="180">
+                <div class="relative overflow-hidden aspect-[4/3] bg-black/40 flex items-center justify-center p-2">
+                    <img src="images/Entrepreneur.png" alt="Sertifikat Entrepreneurship" class="w-full h-full object-contain rounded-lg group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                    <span class="absolute top-3 left-3 text-[10px] font-bold px-2.5 py-1 rounded-md bg-white/10 text-gold border border-white/20 backdrop-blur-md uppercase tracking-wider">Seminar &amp; Softskill</span>
+                </div>
+                <div class="p-5">
+                    <span class="text-[10px] text-muted font-bold block mb-1">Universitas Bina Sarana Informatika</span>
+                    <h3 class="font-extrabold text-sm sm:text-base text-ink group-hover:text-gold transition-colors">Entrepreneurship &amp; Digital Business</h3>
+                </div>
+            </article>
+
+        </div>
+    </div>
+</section>
+
+        <!-- PUBLICATIONS & RESEARCH PROFILE -->
+<section id="publikasi" class="py-24 bg-white/[.02] border-y border-white/10 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div class="grid lg:grid-cols-12 gap-10 items-center">
+            
+            <!-- Kolom Kiri: Header & Call-to-Action -->
+            <div class="lg:col-span-5" data-aos="fade-right">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gold/10 border border-gold/25 text-gold text-xs font-bold uppercase tracking-wider mb-4">
+                    <span class="w-2 h-2 rounded-full bg-gold animate-pulse"></span> Research &amp; Academic Contribution
+                </div>
+                
+                <h2 class="display-title text-3xl sm:text-5xl text-ink leading-tight">
+                    Publikasi &amp; <br><span class="gold-text">Riset Ilmiah.</span>
+                </h2>
+                
+                <p class="mt-5 text-sm sm:text-base leading-relaxed text-muted">
+                    Rekam jejak kontribusi riset akademis di bidang <b class="text-ink">Data Mining</b> dan <b class="text-ink">Machine Learning</b> yang telah melalui proses <i class="text-ink">peer-review</i> dan terpublikasi di jurnal ilmiah nasional terakreditasi.
+                </p>
+
+                <div class="mt-8 flex flex-wrap gap-3">
+                    <a href="https://scholar.google.com/scholar?q=%22Maidy+Tri+Wardani%22"
+                       target="_blank" rel="noopener noreferrer"
+                       class="inline-flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-gold text-night text-xs font-extrabold hover:-translate-y-1 transition shadow-xl hover:shadow-gold/20">
+                        <i class="fa-solid fa-graduation-cap text-sm"></i>
+                        Google Scholar Profile
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                    </a>
+                    
+                    <a href="https://journal.upp.ac.id/index.php/rjti/article/view/3389"
+                       target="_blank" rel="noopener noreferrer"
+                       class="inline-flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-white/[.04] border border-white/10 text-ink text-xs font-bold hover:bg-white/[.08] hover:border-gold/30 hover:-translate-y-1 transition">
+                        <i class="fa-solid fa-book-bookmark gold-text text-sm"></i>
+                        Akses Naskah Jurnal
+                    </a>
+                </div>
+            </div>
+
+            <!-- Kolom Kanan: Card Paper Jurnal -->
+            <div class="lg:col-span-7" data-aos="fade-left">
+                <article class="soft-card rounded-[28px] p-7 sm:p-9 border border-white/10 bg-night/50 backdrop-blur-md hover:border-gold/40 transition-all duration-300 shadow-2xl">
+                    
+                    <!-- Top Badge -->
+                    <div class="flex items-start justify-between gap-4 mb-5">
+                        <div class="flex items-center gap-3">
+                            <div class="shrink-0 w-12 h-12 rounded-2xl bg-gold/10 border border-gold/30 flex items-center justify-center gold-text">
+                                <i class="fa-solid fa-file-invoice text-lg"></i>
+                            </div>
+                            <div>
+                                <span class="text-[10px] font-black uppercase tracking-[.2em] gold-text block">Peer-Reviewed Journal · 2025</span>
+                                <span class="text-xs font-bold text-emerald-400">Terpublikasi Resmi</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Judul Artikel -->
+                    <h3 class="text-lg sm:text-xl font-extrabold leading-snug text-ink hover:text-gold transition-colors">
+                        Pengelompokkan Provinsi Berdasarkan Kelayakan Ruang Kelas dan Tenaga Kependidikan Sekolah Dasar Menggunakan Algoritma K-Means
+                    </h3>
+
+                    <!-- Ringkasan/Abstrak Singkat -->
+                    <p class="mt-4 text-xs sm:text-sm text-muted leading-relaxed">
+                        Penerapan metodologi <b class="text-ink">CRISP-DM</b> dan algoritma <b class="text-ink">K-Means Clustering</b> untuk memetakan serta mengelompokkan 38 provinsi di Indonesia berdasarkan indikator pemerataan sarana kelayakan ruang kelas dan kuantitas tenaga kependidikan SD (periode 2023–2024).
+                    </p>
+
+                    <!-- Tech & Subject Badges -->
+                    <div class="mt-6 flex flex-wrap gap-2">
+                        <span class="px-3 py-1 rounded-lg bg-white/[.04] border border-white/10 text-[11px] font-semibold text-ink">K-Means Clustering</span>
+                        <span class="px-3 py-1 rounded-lg bg-white/[.04] border border-white/10 text-[11px] font-semibold text-ink">CRISP-DM Method</span>
+                        <span class="px-3 py-1 rounded-lg bg-white/[.04] border border-white/10 text-[11px] font-semibold text-ink">Data Mining</span>
+                        <span class="px-3 py-1 rounded-lg bg-white/[.04] border border-white/10 text-[11px] font-semibold text-ink">Educational Analytics</span>
+                    </div>
+
+                    <!-- Footer Info (Journal Publisher & DOI) -->
+                    <div class="mt-8 pt-6 border-t border-white/10 grid sm:grid-cols-2 gap-4">
+                        <a href="https://journal.upp.ac.id/index.php/rjti/article/view/3389"
+                           target="_blank" rel="noopener noreferrer"
+                           class="group rounded-2xl bg-white/[.03] border border-white/10 p-4 hover:bg-white/[.06] hover:border-gold/30 transition">
+                            <div class="flex items-center justify-between">
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-muted">Jurnal Penerbit</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-muted group-hover:text-gold transition-colors"></i>
+                            </div>
+                            <p class="mt-1.5 text-xs font-extrabold text-ink group-hover:text-gold transition-colors">Riau Jurnal Teknik Informatika</p>
+                            <p class="mt-0.5 text-[10px] text-muted">Vol. 4 No. 2 · Tahun 2025</p>
+                        </a>
+
+                        <a href="https://doi.org/10.30606/rjti.v4i2.3389"
+                           target="_blank" rel="noopener noreferrer"
+                           class="group rounded-2xl bg-white/[.03] border border-white/10 p-4 hover:bg-white/[.06] hover:border-gold/30 transition">
+                            <div class="flex items-center justify-between">
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-muted">DOI Identifier</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-muted group-hover:text-gold transition-colors"></i>
+                            </div>
+                            <p class="mt-1.5 text-xs font-extrabold text-ink group-hover:text-gold transition-colors">10.30606/rjti.v4i2.3389</p>
+                            <p class="mt-0.5 text-[10px] text-muted">Digital Object Identifier</p>
+                        </a>
+                    </div>
+
+                </article>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+       <!-- ==================== CONTACT SECTION ==================== -->
+<section id="kontak" class="py-24 relative overflow-hidden">
+    <div class="section-wrap max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="relative overflow-hidden rounded-[36px] soft-card p-8 sm:p-12 sm:pb-14 border border-white/10 bg-night/50 backdrop-blur-xl shadow-2xl" data-aos="zoom-in">
+            <div class="contact-orb w-80 h-80 -right-20 -top-24 bg-gold/20 blur-3xl rounded-full absolute pointer-events-none"></div>
+            <div class="contact-orb w-72 h-72 -left-20 -bottom-24 bg-gold/15 blur-3xl rounded-full absolute pointer-events-none"></div>
+
+            <div class="relative z-10 grid lg:grid-cols-[1.1fr_.9fr] gap-10 lg:gap-12 items-center">
+                
+                <div>
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold uppercase tracking-wider mb-5">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> Available for Full-Time &amp; Project Roles
+                    </div>
+
+                    <h2 class="display-title text-3xl sm:text-5xl text-ink leading-tight">
+                        Mari Berdiskusi &amp; <br>
+                        <span class="gold-text">Membangun Solusi.</span>
+                    </h2>
+
+                    <p class="text-sm sm:text-base text-muted leading-relaxed max-w-lg mt-4">
+                        Saya sangat terbuka untuk peluang karier sebagai <b class="text-ink">Software Developer</b>, <b class="text-ink">AI / Computer Vision Engineer</b>, atau <b class="text-ink">Data Analyst</b>. Mari terhubung untuk mendiskusikan bagaimana saya dapat memberikan dampak positif bagi tim Anda.
+                    </p>
+
+                    <!-- Contact Buttons Grid (WhatsApp Dihapus, Email Full Width) -->
+                    <div class="mt-8 grid grid-cols-1 gap-4">
+                        <a href="mailto:meydtriwardani@gmail.com" 
+                           class="group rounded-2xl bg-white/[.03] border border-white/10 p-4 sm:p-5 hover:bg-white/[.08] hover:border-gold/40 transition-all duration-300 hover:-translate-y-1 block">
+                            <div class="flex items-center justify-between gap-2">
+                                <div class="w-9 h-9 rounded-xl bg-gold/10 border border-gold/30 flex items-center justify-center gold-text shrink-0 group-hover:scale-110 transition-transform">
+                                    <i class="fa-regular fa-envelope text-base"></i>
+                                </div>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-muted group-hover:text-gold transition-colors shrink-0"></i>
+                            </div>
+                            <div class="mt-3">
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-muted block">Email Direct</span>
+                                <span class="text-xs font-extrabold mt-1 text-ink group-hover:text-gold transition-colors block break-all leading-tight">
+                                    meydtriwardani@gmail.com
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- QR Code & CV Card (Barcode Diperbaiki dengan API QR Server) -->
+                <div class="rounded-[28px] bg-white/[.03] border border-white/10 p-7 sm:p-9 text-center backdrop-blur-md relative overflow-hidden group hover:border-gold/30 transition-all">
+                    <span class="inline-block text-[10px] font-black uppercase tracking-[.18em] gold-text px-3 py-1 rounded-full bg-gold/10 border border-gold/20 mb-5">
+                        ATS-Friendly Curriculum Vitae
+                    </span>
+
+                    <a href="https://bit.ly/Cv_Maidy_Tri_Wardani" target="_blank" rel="noopener noreferrer" class="block group-hover:scale-105 transition-transform duration-300">
+                        <div class="w-36 h-36 sm:w-40 sm:h-40 mx-auto rounded-2xl bg-white p-2.5 shadow-2xl border-2 border-gold/30 flex items-center justify-center relative">
+                            <!-- Menggunakan QR API agar gambar barcode muncul dengan sempurna -->
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://bit.ly/Cv_Maidy_Tri_Wardani" 
+                                 alt="QR Code CV Maidy Tri Wardani" 
+                                 class="w-full h-full object-contain">
+                        </div>
+                    </a>
+
+                    <p class="text-xs font-extrabold text-ink mt-5 leading-snug">
+                        Scan QR Code atau Klik Tombol di Bawah <br>
+                        <span class="text-muted font-normal text-[11px]">Untuk melihat &amp; mengunduh dokumen CV resmi</span>
+                    </p>
+
+                    <a href="https://bit.ly/Cv_Maidy_Tri_Wardani" target="_blank" rel="noopener noreferrer" 
+                       class="mt-6 inline-flex items-center justify-center gap-2.5 w-full py-4 rounded-xl bg-gold text-night text-xs font-black hover:brightness-110 hover:shadow-lg hover:shadow-gold/20 transition-all duration-300">
+                        <i class="fa-solid fa-file-pdf text-sm"></i>
+                        Unduh CV Maidy Tri Wardani
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1"></i>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="py-10 border-t border-white/10 bg-night/80 text-center relative z-10">
+        <div class="section-wrap max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="text-left">
+                <p class="text-xs font-bold text-ink">Maidy Tri Wardani</p>
+                <p class="text-[10px] text-muted mt-0.5">© 2026 Professional Portfolio. All rights reserved.</p>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <span class="px-3 py-1 rounded-full bg-white/[.03] border border-white/10 text-[10px] font-bold text-muted">AI &amp; Computer Vision</span>
+                <span class="px-3 py-1 rounded-full bg-white/[.03] border border-white/10 text-[10px] font-bold text-muted">Web Engineering</span>
+                <span class="px-3 py-1 rounded-full bg-white/[.03] border border-white/10 text-[10px] font-bold text-muted">Data Analytics</span>
+            </div>
+
+            <div>
+                <a href="#pengalaman" class="w-9 h-9 rounded-xl bg-white/[.04] border border-white/10 inline-flex items-center justify-center text-gold hover:bg-gold hover:text-night transition-colors" title="Back to top">
+                    <i class="fa-solid fa-arrow-up text-xs"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS Libraries -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+
+    <script>
+        // AOS — fungsi animasi tetap
+        AOS.init({
+            once: true,
+            duration: 850,
+            easing: 'ease-out-cubic',
+            offset: 60
+        });
+
+        // GLightbox — fungsi popup gambar tetap
+        const lightbox = GLightbox({
+            touchNavigation: true,
+            loop: true,
+            zoomable: true
+        });
+
+        // Mobile menu — fungsi tetap
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            const icon = menuBtn.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-xmark');
+        });
+
+        // Tutup menu mobile saat link diklik
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                const icon = menuBtn.querySelector('i');
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-xmark');
+            });
+        });
+
+        // Project filter — fungsi utama tetap
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filterValue = btn.getAttribute('data-filter');
+
+                projectCards.forEach(card => {
+                    const show = filterValue === 'all' || card.classList.contains(filterValue);
+
+                    if (show) {
+                        card.style.display = 'flex';
+                        card.animate(
+                            [
+                                { opacity: 0, transform: 'translateY(15px)' },
+                                { opacity: 1, transform: 'translateY(0)' }
+                            ],
+                            { duration: 350, easing: 'ease-out', fill: 'both' }
+                        );
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Navbar sedikit berubah saat scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 30) {
+                navbar.classList.add('scale-[.985]');
+            } else {
+                navbar.classList.remove('scale-[.985]');
+            }
+        });
+    </script>
+</body>
+</html>
